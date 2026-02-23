@@ -251,7 +251,6 @@ async function api(method, path, body) {
     method, headers: { 'Content-Type': 'application/json', ...(State.token ? { 'Authorization': 'Bearer ' + State.token } : {}) }
   };
   if (body) opts.body = JSON.stringify(body);
-  // Map paths to Vercel serverless functions
   let url = '/api' + path;
   if (path.startsWith('/auth/login')) url = '/api/login';
   else if (path.match(/^\/products\/lookup\//)) url = '/api/products?lookup=' + path.split('/products/lookup/')[1];
@@ -913,7 +912,6 @@ function openProductModal(prod, categories, suppliers) {
   ]);
   m.querySelector('.modal').classList.add('modal-lg');
 
-  // Barcode scan button — focuses input and waits for scanner
   const scanBtn = m.querySelector('#scan-barcode-btn');
   const barcodeInp = m.querySelector('#p-barcode');
   const hint = m.querySelector('#barcode-hint');
@@ -1187,7 +1185,6 @@ async function pageUsers() {
         </div>
       </div>`;
 
-    // Add Staff
     el('add-user-btn').onclick=()=>{
       const form=document.createElement('div');
       form.innerHTML=`<div class="field"><label>Full Name *</label><input class="inp" id="un-name" placeholder="e.g. John Doe"/></div><div class="form-grid"><div class="field"><label>Username *</label><input class="inp" id="un-user" placeholder="letters, numbers, _"/></div><div class="field"><label>Role</label><select class="sel" id="un-role"><option value="cashier">Cashier</option><option value="manager">Manager</option><option value="admin">Admin</option></select></div></div><div class="field"><label>Password (min 8 chars)</label><input class="inp" type="password" id="un-pass" placeholder="Minimum 8 characters"/></div>`;
@@ -1199,7 +1196,6 @@ async function pageUsers() {
       }}]);
     };
 
-    // Monthly Report
     el('report-btn').onclick=()=>{
       const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
       const years=[2024,2025,2026,2027];
@@ -1260,22 +1256,24 @@ if (State.user && State.token) {
   renderLogin();
 }
 
-// ── RECEIPT PRINTING ─────────────────────────────────────────────────────────
+// ── RECEIPT PRINTING — Optimised for 80mm thermal (72.1mm printable width) ────
 async function printReceipt(saleId) {
   try {
     const sale = await GET('/sales/' + saleId + '/receipt');
-    const fmt = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const fmtR = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
     const d = new Date(sale.created_at);
-    const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit',minute:'2-digit'});
+    const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit', minute:'2-digit'});
 
-    const itemRows = (sale.items || []).map(i =>
-      `<tr>
-        <td>${i.product_name}</td>
-        <td style="text-align:center">${i.quantity}</td>
-        <td style="text-align:right">${fmt(i.unit_price)}</td>
-        <td style="text-align:right">${fmt(i.subtotal)}</td>
-      </tr>`
-    ).join('');
+    // Build item rows — truncate long names so they don't wrap badly on 72mm paper
+    const itemRows = (sale.items || []).map(i => {
+      const name = String(i.product_name || '').substring(0, 22); // keep within 72mm
+      return `<tr>
+        <td style="word-break:break-word;max-width:105px">${name}</td>
+        <td style="text-align:center;white-space:nowrap">${i.quantity}</td>
+        <td style="text-align:right;white-space:nowrap">${fmtR(i.unit_price)}</td>
+        <td style="text-align:right;white-space:nowrap">${fmtR(i.subtotal)}</td>
+      </tr>`;
+    }).join('');
 
     const receiptHTML = `<!DOCTYPE html>
 <html>
@@ -1283,72 +1281,191 @@ async function printReceipt(saleId) {
 <meta charset="UTF-8"/>
 <title>Receipt ${sale.ref}</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Courier New', monospace; font-size: 12px; width: 80mm; margin: 0 auto; padding: 8px; color: #000; }
-  .center { text-align: center; }
-  .bold { font-weight: bold; }
-  .big { font-size: 16px; }
-  .divider { border-top: 1px dashed #000; margin: 6px 0; }
-  table { width: 100%; border-collapse: collapse; }
-  th { font-weight: bold; border-bottom: 1px solid #000; padding: 2px 0; font-size: 11px; }
-  td { padding: 2px 0; font-size: 11px; }
-  .totals td { padding: 1px 0; }
-  .grand-total td { font-weight: bold; font-size: 13px; border-top: 1px solid #000; padding-top: 4px; }
+  /* ── Reset ── */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  /* ── Page setup: 80mm wide, unlimited height (thermal roll) ── */
+  @page {
+    size: 80mm 297mm;          /* 80mm width; 297mm = safe max; printer cuts at end */
+    margin: 0mm 2mm 4mm 2mm;  /* top/bottom/left/right — keeps us inside 72.1mm */
+  }
+
+  /* ── Body matches printable width ── */
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    width: 72mm;               /* printable area of your printer */
+    margin: 0 auto;
+    padding: 4px 0;
+    color: #000;
+    background: #fff;
+  }
+
+  /* ── Preview wrapper (shown in browser, hidden when printing) ── */
+  .preview-shell {
+    background: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+  }
+  .preview-label {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #666;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+    padding: 6px 14px;
+  }
+  .receipt-box {
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    padding: 6px 4px;
+    width: 72mm;
+  }
+  .print-btn {
+    font-family: Arial, sans-serif;
+    padding: 10px 28px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+  }
+
+  /* ── Typography ── */
+  .center  { text-align: center; }
+  .bold    { font-weight: bold; }
+  .big     { font-size: 14px; font-weight: bold; }
+  .small   { font-size: 9px; }
+  .divider { border: none; border-top: 1px dashed #555; margin: 5px 0; }
+  .spacer  { height: 4px; }
+
+  /* ── Table ── */
+  table   { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th      { font-size: 9px; font-weight: bold; border-bottom: 1px solid #000;
+            padding: 2px 1px; text-transform: uppercase; }
+  td      { font-size: 10px; padding: 2px 1px; vertical-align: top; }
+
+  /* column widths — total must stay within 72mm */
+  .col-item  { width: 44%; }   /* item name  */
+  .col-qty   { width: 10%; }   /* qty        */
+  .col-price { width: 22%; }   /* unit price */
+  .col-total { width: 24%; }   /* line total */
+
+  /* ── Totals block ── */
+  .totals-table td { font-size: 10px; padding: 1px 1px; }
+  .grand td        { font-size: 12px; font-weight: bold;
+                     border-top: 1px solid #000; padding-top: 3px; }
+
+  /* ── Footer ── */
+  .footer { font-size: 9px; text-align: center; margin-top: 6px; }
+
+  /* ── Print overrides ── */
   @media print {
-    body { width: 80mm; }
-    button { display: none; }
+    .preview-shell { background: none; padding: 0; display: block; min-height: unset; }
+    .preview-label, .print-btn { display: none !important; }
+    .receipt-box   { box-shadow: none; padding: 0; width: 72mm; }
+    body           { width: 72mm; }
   }
 </style>
 </head>
 <body>
-<div class="center">
-  <div class="bold big">C.A. CAR ACCESSORIES</div>
-  <div>Quality Auto Parts & Accessories</div>
-  <div>Tel: 07061909275</div>
-</div>
-<div class="divider"></div>
-<div>Receipt: <strong>${sale.ref}</strong></div>
-<div>Date: ${dateStr}</div>
-<div>Cashier: ${sale.cashier_name || 'Staff'}</div>
-${sale.customer_name ? '<div>Customer: ' + sale.customer_name + '</div>' : ''}
-<div class="divider"></div>
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:left">Item</th>
-      <th style="text-align:center">Qty</th>
-      <th style="text-align:right">Price</th>
-      <th style="text-align:right">Total</th>
-    </tr>
-  </thead>
-  <tbody>${itemRows}</tbody>
-</table>
-<div class="divider"></div>
-<table class="totals">
-  <tr><td>Subtotal</td><td style="text-align:right">${fmt(sale.subtotal)}</td></tr>
-  ${sale.discount_amount > 0 ? '<tr><td>Discount</td><td style="text-align:right">-' + fmt(sale.discount_amount) + '</td></tr>' : ''}
-  <tr class="grand-total"><td>TOTAL</td><td style="text-align:right">${fmt(sale.total)}</td></tr>
-  <tr><td>Amount Paid (${sale.payment_method})</td><td style="text-align:right">${fmt(sale.amount_paid)}</td></tr>
-  <tr><td>Change</td><td style="text-align:right">${fmt(sale.change_given)}</td></tr>
-</table>
-<div class="divider"></div>
-${sale.loyalty_points_earned > 0 ? '<div class="center">Points Earned: ' + sale.loyalty_points_earned + '</div>' : ''}
-<div class="center" style="margin-top:8px">Thank you for your patronage!</div>
-<div class="center">Powered by Greener P Tech</div>
-<br/>
-<div class="center"><button onclick="window.print()" style="padding:8px 20px;font-size:14px;cursor:pointer;background:#000;color:#fff;border:none;border-radius:4px">🖨️ Print</button></div>
-<script>setTimeout(()=>window.print(), 500);<\/script>
+
+<div class="preview-shell">
+  <div class="preview-label">🖨️ 80mm Thermal Receipt Preview — click Print below</div>
+
+  <div class="receipt-box">
+
+    <!-- HEADER -->
+    <div class="center bold big">C.A. CAR ACCESSORIES</div>
+    <div class="center small">Quality Auto Parts &amp; Accessories</div>
+    <div class="center small">Tel: 07061909275</div>
+    <hr class="divider"/>
+
+    <!-- META -->
+    <div>Receipt: <strong>${sale.ref}</strong></div>
+    <div>Date: ${dateStr}</div>
+    <div>Cashier: ${sale.cashier_name || 'Staff'}</div>
+    ${sale.customer_name ? `<div>Customer: ${sale.customer_name}</div>` : ''}
+    <hr class="divider"/>
+
+    <!-- ITEMS -->
+    <table>
+      <colgroup>
+        <col class="col-item"/>
+        <col class="col-qty"/>
+        <col class="col-price"/>
+        <col class="col-total"/>
+      </colgroup>
+      <thead>
+        <tr>
+          <th style="text-align:left">Item</th>
+          <th style="text-align:center">Qty</th>
+          <th style="text-align:right">Price</th>
+          <th style="text-align:right">Total</th>
+        </tr>
+      </thead>
+      <tbody>${itemRows}</tbody>
+    </table>
+    <hr class="divider"/>
+
+    <!-- TOTALS -->
+    <table class="totals-table">
+      <colgroup><col style="width:60%"/><col style="width:40%"/></colgroup>
+      <tbody>
+        <tr><td>Subtotal</td><td style="text-align:right">${fmtR(sale.subtotal)}</td></tr>
+        ${sale.discount_amount > 0
+          ? `<tr><td>Discount</td><td style="text-align:right">- ${fmtR(sale.discount_amount)}</td></tr>`
+          : ''}
+        <tr class="grand">
+          <td>TOTAL</td>
+          <td style="text-align:right">${fmtR(sale.total)}</td>
+        </tr>
+        <tr>
+          <td>Paid (${sale.payment_method})</td>
+          <td style="text-align:right">${fmtR(sale.amount_paid)}</td>
+        </tr>
+        <tr>
+          <td>Change</td>
+          <td style="text-align:right">${fmtR(sale.change_given)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr class="divider"/>
+
+    <!-- LOYALTY & FOOTER -->
+    ${sale.loyalty_points_earned > 0
+      ? `<div class="center small">Points earned: ${sale.loyalty_points_earned} pts</div>`
+      : ''}
+    <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech</div>
+    <div class="spacer"></div>
+
+  </div><!-- /.receipt-box -->
+
+  <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
+</div><!-- /.preview-shell -->
+
+<script>
+  // Auto-trigger print dialog after a short delay
+  setTimeout(() => window.print(), 800);
+<\/script>
 </body>
 </html>`;
 
-    const w = window.open('', '_blank', 'width=400,height=600');
+    const w = window.open('', '_blank', 'width=420,height=650,scrollbars=yes');
+    if (!w) { toast('Pop-up blocked — please allow pop-ups for this site', 'warn'); return; }
     w.document.write(receiptHTML);
     w.document.close();
   } catch(e) {
     toast('Could not load receipt: ' + e.message, 'err');
   }
 }
-
 </script>
 </body>
 </html>
