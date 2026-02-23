@@ -334,11 +334,7 @@ function renderLogin() {
         <div class="field"><label>Username</label><input class="inp" id="lu" placeholder="Enter username" autocomplete="username"/></div>
         <div class="field"><label>Password</label><input class="inp" id="lp" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
         <button class="btn btn-primary btn-full" id="login-btn" style="margin-top:6px">Sign In →</button>
-        <div class="hint-box">
-          <strong>Default Credentials</strong><br/>
-          Admin: <code>admin</code> / <code>Admin@CA2024!</code><br/>
-          Cashier: <code>cashier1</code> / <code>Cashier@CA!</code>
-        </div>
+
       </div>
     </div>`;
   const doLogin = async () => {
@@ -1286,7 +1282,7 @@ async function printReceipt(saleId) {
 
   /* ── Page setup: 80mm wide, unlimited height (thermal roll) ── */
   @page {
-    size: 80mm 297mm;          /* 80mm width; 297mm = safe max; printer cuts at end */
+    size: 80mm auto;           /* 80mm width; auto height = printer cuts at content end */
     margin: 0mm 2mm 4mm 2mm;  /* top/bottom/left/right — keeps us inside 72.1mm */
   }
 
@@ -1385,7 +1381,7 @@ async function printReceipt(saleId) {
     <!-- HEADER -->
     <div class="center bold big">C.A. CAR ACCESSORIES</div>
     <div class="center small">Quality Auto Parts &amp; Accessories</div>
-    <div class="center small">Tel: 07061909275</div>
+    <div class="center small">Tel: 07061909275 | 09049061562</div>
     <hr class="divider"/>
 
     <!-- META -->
@@ -1440,10 +1436,8 @@ async function printReceipt(saleId) {
     <hr class="divider"/>
 
     <!-- LOYALTY & FOOTER -->
-    ${sale.loyalty_points_earned > 0
-      ? `<div class="center small">Points earned: ${sale.loyalty_points_earned} pts</div>`
-      : ''}
-    <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech</div>
+
+    <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech<br/>08147474278</div>
     <div class="spacer"></div>
 
   </div><!-- /.receipt-box -->
