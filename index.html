@@ -257,6 +257,7 @@ async function api(method, path, body) {
   else if (path.match(/^\/products\/lookup\//)) url = '/api/products?lookup=' + path.split('/products/lookup/')[1];
   else if (path.match(/^\/products\/\d+\/adjust-stock/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?action=adjust-stock&id='+pid; }
   else if (path.match(/^\/products\/\d+/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?id='+pid; }
+  else if (path.match(/^\/sales\/\d+\/receipt/)) url = '/api/receipt?id=' + path.match(/\/sales\/(\d+)/)[1];
   else if (path.match(/^\/sales\/\d+/)) url = '/api/sales?id=' + path.match(/\d+/)[0];
   else if (path.match(/^\/users\/\d+/)) url = '/api/users?id=' + path.match(/\d+/)[0];
   else if (path.startsWith('/reports/dashboard')) url = '/api/dashboard';
@@ -264,6 +265,8 @@ async function api(method, path, body) {
   else if (path.startsWith('/customers/lookup/')) url = '/api/customers?phone=' + path.split('/customers/lookup/')[1];
   else if (path.startsWith('/discounts/validate')) url = '/api/discounts' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
   else if (path.match(/^\/discounts\/\d+/)) url = '/api/discounts?id=' + path.match(/\d+/)[0];
+  else if (path.startsWith('/categories')) url = '/api/data?type=categories';
+  else if (path.startsWith('/suppliers')) url = '/api/data?type=suppliers';
   else if (path.startsWith('/stock-movements')) url = '/api/products';
   else if (path.startsWith('/purchase-orders')) url = '/api/dashboard';
   else if (path.startsWith('/admin/')) url = '/api/dashboard';
@@ -741,13 +744,13 @@ function pagePOS() {
       }
       const lsi = el('last-sale-info');
       lsi.style.display='flex';
-      lsi.innerHTML=`<span>✅ Last sale: <strong>${esc(result.ref)}</strong> — ${fmt(result.total)} (Change: ${fmt(result.change||0)})</span><a href="/api/sales/${result.saleId}/receipt" target="_blank" class="btn btn-ghost btn-sm">🖨️ Receipt</a>`;
+      lsi.innerHTML=`<span>✅ Last sale: <strong>${esc(result.ref)}</strong> — ${fmt(result.total)} (Change: ${fmt(result.change||0)})</span><button onclick="printReceipt(${result.saleId})" class="btn btn-ghost btn-sm">🖨️ Receipt</button>`;
       cart=[]; promoApplied=null; customer=null;
       el('scan-inp').value=''; el('promo-inp').value=''; el('promo-msg').textContent='';
       el('amount-paid').value=''; el('cust-phone').value=''; el('cust-result').innerHTML='';
       scanResult.innerHTML='';
       recalc();
-   } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`💳 Checkout — ${fmt(total)}`; }
+    } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`💳 Checkout — ${fmt(total)}`; }
   };
   recalc();
   setTimeout(()=>scanInp.focus(),100);
@@ -963,7 +966,7 @@ async function pageSales() {
               <td class="money">${fmt(s.total)}</td>
               <td><div class="td-actions">
                 <button class="btn btn-ghost btn-sm" onclick="viewSale(${s.id})">👁️</button>
-                <a href="/api/sales/${s.id}/receipt" target="_blank" class="btn btn-ghost btn-sm">🖨️</a>
+                <button onclick="printReceipt(${s.id})" class="btn btn-ghost btn-sm">🖨️</button>
               </div></td>
             </tr>`).join('')}
           </tbody>
@@ -989,7 +992,7 @@ window.viewSale = async (id) => {
     </div>`;
   modal('🧾 Sale — ' + sale.ref, body, [
     { label:'Close' },
-    { label:'🖨️ Print Receipt', cls:'btn-primary', close:false, action:()=>window.open('/api/sales/'+id+'/receipt','_blank') }
+    { label:'🖨️ Print Receipt', cls:'btn-primary', close:false, action:()=>printReceipt(id) }
   ]);
 };
 
@@ -1256,6 +1259,96 @@ if (State.user && State.token) {
 } else {
   renderLogin();
 }
+
+// ── RECEIPT PRINTING ─────────────────────────────────────────────────────────
+async function printReceipt(saleId) {
+  try {
+    const sale = await GET('/sales/' + saleId + '/receipt');
+    const fmt = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const d = new Date(sale.created_at);
+    const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit',minute:'2-digit'});
+
+    const itemRows = (sale.items || []).map(i =>
+      `<tr>
+        <td>${i.product_name}</td>
+        <td style="text-align:center">${i.quantity}</td>
+        <td style="text-align:right">${fmt(i.unit_price)}</td>
+        <td style="text-align:right">${fmt(i.subtotal)}</td>
+      </tr>`
+    ).join('');
+
+    const receiptHTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Receipt ${sale.ref}</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Courier New', monospace; font-size: 12px; width: 80mm; margin: 0 auto; padding: 8px; color: #000; }
+  .center { text-align: center; }
+  .bold { font-weight: bold; }
+  .big { font-size: 16px; }
+  .divider { border-top: 1px dashed #000; margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-weight: bold; border-bottom: 1px solid #000; padding: 2px 0; font-size: 11px; }
+  td { padding: 2px 0; font-size: 11px; }
+  .totals td { padding: 1px 0; }
+  .grand-total td { font-weight: bold; font-size: 13px; border-top: 1px solid #000; padding-top: 4px; }
+  @media print {
+    body { width: 80mm; }
+    button { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="center">
+  <div class="bold big">C.A. CAR ACCESSORIES</div>
+  <div>Quality Auto Parts & Accessories</div>
+  <div>Tel: 07061909275</div>
+</div>
+<div class="divider"></div>
+<div>Receipt: <strong>${sale.ref}</strong></div>
+<div>Date: ${dateStr}</div>
+<div>Cashier: ${sale.cashier_name || 'Staff'}</div>
+${sale.customer_name ? '<div>Customer: ' + sale.customer_name + '</div>' : ''}
+<div class="divider"></div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Item</th>
+      <th style="text-align:center">Qty</th>
+      <th style="text-align:right">Price</th>
+      <th style="text-align:right">Total</th>
+    </tr>
+  </thead>
+  <tbody>${itemRows}</tbody>
+</table>
+<div class="divider"></div>
+<table class="totals">
+  <tr><td>Subtotal</td><td style="text-align:right">${fmt(sale.subtotal)}</td></tr>
+  ${sale.discount_amount > 0 ? '<tr><td>Discount</td><td style="text-align:right">-' + fmt(sale.discount_amount) + '</td></tr>' : ''}
+  <tr class="grand-total"><td>TOTAL</td><td style="text-align:right">${fmt(sale.total)}</td></tr>
+  <tr><td>Amount Paid (${sale.payment_method})</td><td style="text-align:right">${fmt(sale.amount_paid)}</td></tr>
+  <tr><td>Change</td><td style="text-align:right">${fmt(sale.change_given)}</td></tr>
+</table>
+<div class="divider"></div>
+${sale.loyalty_points_earned > 0 ? '<div class="center">Points Earned: ' + sale.loyalty_points_earned + '</div>' : ''}
+<div class="center" style="margin-top:8px">Thank you for your patronage!</div>
+<div class="center">Powered by Greener P Tech</div>
+<br/>
+<div class="center"><button onclick="window.print()" style="padding:8px 20px;font-size:14px;cursor:pointer;background:#000;color:#fff;border:none;border-radius:4px">🖨️ Print</button></div>
+<script>setTimeout(()=>window.print(), 500);<\/script>
+</body>
+</html>`;
+
+    const w = window.open('', '_blank', 'width=400,height=600');
+    w.document.write(receiptHTML);
+    w.document.close();
+  } catch(e) {
+    toast('Could not load receipt: ' + e.message, 'err');
+  }
+}
+
 </script>
 </body>
 </html>
