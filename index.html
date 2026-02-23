@@ -747,7 +747,7 @@ function pagePOS() {
       el('amount-paid').value=''; el('cust-phone').value=''; el('cust-result').innerHTML='';
       scanResult.innerHTML='';
       recalc();
-    } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`💳 Checkout — ${fmt(total)`; }
+   } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`💳 Checkout — ${fmt(total)}`; }
   };
   recalc();
   setTimeout(()=>scanInp.focus(),100);
