@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>C.A. Car Accessories</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Emoji&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -17,10 +19,18 @@
   --blue:#4db8ff;--blue-dim:rgba(77,184,255,.1);
   --purple:#a78bfa;--purple-dim:rgba(167,139,250,.1);
   --text:#ddeeff;--muted:#4d6b8a;--muted2:#8faabf;
-  --mono:'DM Mono',monospace;--sans:'Outfit',sans-serif;
+  --mono:'DM Mono',monospace;
+  --sans:'Outfit','Segoe UI Emoji','Segoe UI Symbol','Apple Color Emoji','Noto Color Emoji',sans-serif;
   --radius:8px;--radius-lg:12px;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;overflow:hidden}
+/* Force emoji to render as color pictographs on Windows 7 / older browsers */
+html,body{
+  height:100%;background:var(--bg);color:var(--text);
+  font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol','Apple Color Emoji','Noto Color Emoji',sans-serif;
+  font-size:14px;line-height:1.5;overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
@@ -43,7 +53,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 #sidebar.collapsed .sb-logo{padding:18px 12px;display:flex;justify-content:space-between;align-items:center}
 
 .sb-nav{flex:1;padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:500;width:100%;text-align:left;transition:all .15s;white-space:nowrap;position:relative}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;background:none;border:none;color:var(--muted);font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-size:13px;font-weight:500;width:100%;text-align:left;transition:all .15s;white-space:nowrap;position:relative}
 .nav-btn:hover{background:var(--surface2);color:var(--text)}
 .nav-btn.active{background:var(--green-dim);color:var(--green)}
 .nav-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center}
@@ -59,7 +69,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .user-rl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 #sidebar.collapsed .user-info .user-nm,#sidebar.collapsed .user-info .user-rl{display:none}
 #sidebar.collapsed .user-info{justify-content:center}
-.logout-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:var(--radius);padding:7px 12px;cursor:pointer;font-size:12px;font-family:var(--sans);font-weight:600;display:flex;align-items:center;gap:6px;width:100%;justify-content:center}
+.logout-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:var(--radius);padding:7px 12px;cursor:pointer;font-size:12px;font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;width:100%;justify-content:center}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 #sidebar.collapsed .logout-btn span{display:none}
 
@@ -76,7 +86,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .page-actions{display:flex;gap:8px;flex-wrap:wrap}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--radius);font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn-primary{background:var(--green);color:#07090d}
 .btn-primary:hover:not(:disabled){background:#00f5ae}
@@ -217,6 +227,9 @@ code{color:var(--green);font-family:var(--mono)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 
+/* EMOJI - force emoji font so they show on Win7 */
+.ico{font-family:'Segoe UI Emoji','Segoe UI Symbol','Apple Color Emoji','Noto Emoji',sans-serif;font-style:normal;display:inline-block;line-height:1}
+
 /* RESPONSIVE */
 @media(max-width:800px){
   .pos-grid{grid-template-columns:1fr;height:auto}
@@ -229,6 +242,87 @@ code{color:var(--green);font-family:var(--mono)}
   #sidebar .sb-logo{padding:14px 10px;display:flex;justify-content:space-between;align-items:center}
   #sidebar .user-info{justify-content:center}
 }
+
+/* ── Emoji rendering fix for Windows 7 / IE / older Chromium ── */
+.nav-icon, .empty-icon, .badge, .toast {
+  font-family: 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji',
+               'Noto Color Emoji', 'Android Emoji', 'Outfit', sans-serif;
+  font-variant-emoji: emoji;
+}
+/* Force color emoji on Windows systems */
+@supports (font-variant-emoji: emoji) {
+  * { font-variant-emoji: normal; }
+  .nav-icon, .empty-icon { font-variant-emoji: emoji; }
+}
+
+
+/* ═══ EMOJI RENDERING FIX ══════════════════════════════════════════════════
+   Windows 7 IE/Chrome may render emoji as black-and-white symbols.
+   Force color emoji presentation using Segoe UI Emoji (built into Win7 SP1+)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Force every element that might contain emoji to use the emoji font */
+* {
+  font-family: inherit;
+}
+
+/* Global emoji font injection into every text-rendering element */
+body, button, input, select, textarea, td, th, div, span, a, h1, h2, h3, h4, h5, h6, p, label {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', Arial, sans-serif;
+}
+
+/* Nav icons — bigger and explicit emoji font */
+.nav-icon {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: inline-block;
+}
+
+/* Empty state icons */
+.empty-icon {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+  font-size: 44px !important;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Buttons with emoji */
+.btn, .nav-btn, .logout-btn, .pay-btn, .qty-btn {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+/* Toast notifications */
+.toast {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+/* Page headers and titles */
+.page-title, .modal-title, .sec-title, .cart-head, .scan-lbl {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+/* Table cells */
+td, th {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+/* Alert banner */
+#alert-banner {
+  font-family: 'Outfit', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+/* 1280x1024 desktop resolution adjustments */
+@media screen and (min-width:1260px) and (min-height:1000px) {
+  .nav-icon { font-size: 22px !important; }
+  .empty-icon { font-size: 48px !important; }
+  .nav-btn { font-size: 13.5px; padding: 11px 12px; }
+  .btn { font-size: 13.5px; }
+  .page-title { font-size: 24px; }
+  .stat-val { font-size: 26px; }
+  .stat-val.sm { font-size: 20px; }
+}
+
 </style>
 </head>
 <body>
@@ -251,24 +345,8 @@ async function api(method, path, body) {
     method, headers: { 'Content-Type': 'application/json', ...(State.token ? { 'Authorization': 'Bearer ' + State.token } : {}) }
   };
   if (body) opts.body = JSON.stringify(body);
-  let url = '/api' + path;
-  if (path.startsWith('/auth/login')) url = '/api/login';
-  else if (path.match(/^\/products\/lookup\//)) url = '/api/products?lookup=' + path.split('/products/lookup/')[1];
-  else if (path.match(/^\/products\/\d+\/adjust-stock/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?action=adjust-stock&id='+pid; }
-  else if (path.match(/^\/products\/\d+/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?id='+pid; }
-  else if (path.match(/^\/sales\/\d+\/receipt/)) url = '/api/receipt?id=' + path.match(/\/sales\/(\d+)/)[1];
-  else if (path.match(/^\/sales\/\d+/)) url = '/api/sales?id=' + path.match(/\d+/)[0];
-  else if (path.match(/^\/users\/\d+/)) url = '/api/users?id=' + path.match(/\d+/)[0];
-  else if (path.startsWith('/reports/dashboard')) url = '/api/dashboard';
-  else if (path.startsWith('/reports/')) url = '/api/dashboard';
-  else if (path.startsWith('/customers/lookup/')) url = '/api/customers?phone=' + path.split('/customers/lookup/')[1];
-  else if (path.startsWith('/discounts/validate')) url = '/api/discounts' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
-  else if (path.match(/^\/discounts\/\d+/)) url = '/api/discounts?id=' + path.match(/\d+/)[0];
-  else if (path.startsWith('/categories')) url = '/api/data?type=categories';
-  else if (path.startsWith('/suppliers')) url = '/api/data?type=suppliers';
-  else if (path.startsWith('/stock-movements')) url = '/api/products';
-  else if (path.startsWith('/purchase-orders')) url = '/api/dashboard';
-  else if (path.startsWith('/admin/')) url = '/api/dashboard';
+  // Desktop routing — all API calls go directly to Express server
+  const url = '/api' + path;
   const res = await fetch(url, opts);
   if (res.status === 401) { logout(); throw new Error('Unauthorized'); }
   const data = await res.json().catch(() => ({}));
@@ -286,7 +364,7 @@ const DELETE = (p) => api('DELETE', p);
 function toast(msg, type='ok') {
   const el = document.createElement('div');
   el.className = 'toast' + (type === 'err' ? ' err' : type === 'warn' ? ' warn' : '');
-  el.textContent = (type==='ok'?'✅ ':type==='err'?'❌ ':'⚠️ ') + msg;
+  el.textContent = (type==='ok'?'<span class="ico">✅</span> ':type==='err'?'<span class="ico">❌</span> ':'<span class="ico">⚠️</span> ') + msg;
   document.getElementById('toast-area').appendChild(el);
   setTimeout(() => el.remove(), 3500);
 }
@@ -327,19 +405,23 @@ function renderLogin() {
   document.getElementById('root').innerHTML = `
     <div class="login-bg">
       <div class="login-card">
-        <div class="login-brand">● C.A. CAR ACCESSORIES</div>
+        <div class="login-brand"><span class="ico">●</span> C.A. CAR ACCESSORIES</div>
         <div class="login-title">Welcome<br/><em>Back.</em></div>
         <div class="login-sub">Sign in to access the store system</div>
         <div id="login-err" class="err-banner" style="display:none"></div>
         <div class="field"><label>Username</label><input class="inp" id="lu" placeholder="Enter username" autocomplete="username"/></div>
         <div class="field"><label>Password</label><input class="inp" id="lp" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
         <button class="btn btn-primary btn-full" id="login-btn" style="margin-top:6px">Sign In →</button>
-
+        <div class="hint-box">
+          <strong>Default Credentials</strong><br/>
+          Admin: <code>admin</code> / <code>Admin@CA2024!</code><br/>
+          Cashier: <code>cashier1</code> / <code>Cashier@CA!</code>
+        </div>
       </div>
     </div>`;
   const doLogin = async () => {
     const btn = el('login-btn');
-    btn.disabled = true; btn.textContent = '⏳ Signing in...';
+    btn.disabled = true; btn.textContent = '<span class="ico">⏳</span> Signing in...';
     try {
       const data = await POST('/auth/login', { username: el('lu').value, password: el('lp').value });
       State.token = data.token; State.user = data.user;
@@ -364,15 +446,15 @@ function logout() {
 
 // ── SHELL ──────────────────────────────────────────────────────────────────────
 const NAV = [
-  { id:'dashboard', label:'Dashboard', icon:'📊', roles:['admin','manager','cashier'] },
-  { id:'pos', label:'POS / Scan', icon:'🔍', roles:['admin','manager','cashier'] },
-  { id:'inventory', label:'Inventory', icon:'📦', roles:['admin','manager','cashier'] },
-  { id:'sales', label:'Sales History', icon:'🧾', roles:['admin','manager','cashier'] },
-  { id:'customers', label:'Customers', icon:'👥', roles:['admin','manager','cashier'] },
-  { id:'discounts', label:'Promo Codes', icon:'🎟️', roles:['admin','manager'] },
-  { id:'suppliers', label:'Suppliers', icon:'🚚', roles:['admin','manager'] },
-  { id:'purchase-orders', label:'Purchase Orders', icon:'📋', roles:['admin','manager'] },
-  { id:'users', label:'Staff Accounts', icon:'👤', roles:['admin'] },
+  { id:'dashboard', label:'Dashboard', icon:'<span class="ico">📊</span>', roles:['admin','manager','cashier'] },
+  { id:'pos', label:'POS / Scan', icon:'<span class="ico">🔍</span>', roles:['admin','manager','cashier'] },
+  { id:'inventory', label:'Inventory', icon:'<span class="ico">📦</span>', roles:['admin','manager','cashier'] },
+  { id:'sales', label:'Sales History', icon:'<span class="ico">🧾</span>', roles:['admin','manager','cashier'] },
+  { id:'customers', label:'Customers', icon:'<span class="ico">👥</span>', roles:['admin','manager','cashier'] },
+  { id:'discounts', label:'Promo Codes', icon:'<span class="ico">🎟️</span>', roles:['admin','manager'] },
+  { id:'suppliers', label:'Suppliers', icon:'<span class="ico">🚚</span>', roles:['admin','manager'] },
+  { id:'purchase-orders', label:'Purchase Orders', icon:'<span class="ico">📋</span>', roles:['admin','manager'] },
+  { id:'users', label:'Staff Accounts', icon:'<span class="ico">👤</span>', roles:['admin'] },
 ];
 
 function renderApp() {
@@ -381,7 +463,7 @@ function renderApp() {
       <aside id="sidebar">
         <div class="sb-logo">
           <div class="sb-logo-content">
-            <div class="sb-logo-mark">● C.A. CAR ACCESSORIES</div>
+            <div class="sb-logo-mark"><span class="ico">●</span> C.A. CAR ACCESSORIES</div>
             <div class="sb-logo-name">C.A. <em>Car Accessories</em></div>
           </div>
           <button class="collapse-btn" id="collapse-btn">‹</button>
@@ -393,11 +475,11 @@ function renderApp() {
             <div class="user-av">${esc(State.user.name[0].toUpperCase())}</div>
             <div><div class="user-nm">${esc(State.user.name)}</div><div class="user-rl">${esc(State.user.role)}</div></div>
           </div>
-          <button class="logout-btn" id="logout-btn">🚪 <span>Logout</span></button>
+          <button class="logout-btn" id="logout-btn"><span class="ico">🚪</span> <span>Logout</span></button>
         </div>
       </aside>
       <main id="main">
-        <div id="alert-banner">⚠️ <strong id="alert-count"></strong>&nbsp;items are running low on stock — click to view inventory</div>
+        <div id="alert-banner"><span class="ico">⚠️</span> <strong id="alert-count"></strong>&nbsp;items are running low on stock — click to view inventory</div>
         <div id="page-content"></div>
       </main>
     </div>`;
@@ -443,7 +525,7 @@ function navigate(page) {
   const activeBtn = el('nav-' + page);
   if (activeBtn) activeBtn.classList.add('active');
   const content = el('page-content');
-  content.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div>Loading...</div>';
+  content.innerHTML = '<div class="empty"><div class="empty-icon"><span class="ico">⏳</span></div>Loading...</div>';
   const pages = { dashboard: pageDashboard, pos: pagePOS, inventory: pageInventory, sales: pageSales, customers: pageCustomers, discounts: pageDiscounts, suppliers: pageSuppliers, 'purchase-orders': pagePurchaseOrders, users: pageUsers };
   if (pages[page]) pages[page]();
 }
@@ -488,7 +570,7 @@ async function pageDashboard() {
     c.innerHTML = `
       <div class="page-header">
         <div><div class="page-title">Dashboard</div><div class="page-sub">${new Date().toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div></div>
-        <button class="btn btn-primary" onclick="navigate('pos')">🔍 Open POS</button>
+        <button class="btn btn-primary" onclick="navigate('pos')"><span class="ico">🔍</span> Open POS</button>
       </div>
       <div class="page-body">
         <div class="stat-grid">
@@ -501,14 +583,14 @@ async function pageDashboard() {
         ${chartHTML}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
           <div>
-            <div class="sec-title">🏆 Top Products</div>
+            <div class="sec-title"><span class="ico">🏆</span> Top Products</div>
             <div class="tbl-card"><table><thead><tr><th>Product</th><th>Sold</th><th>Revenue</th></tr></thead><tbody>
               ${topProducts.length===0?'<tr><td colspan="3" class="empty" style="padding:20px">No sales yet</td></tr>':topProducts.map(p=>`<tr><td>${esc(p.product_name)}</td><td><span class="badge badge-green">${p.sold}</span></td><td class="money">${fmt(p.revenue)}</td></tr>`).join('')}
             </tbody></table></div>
           </div>
           <div>
-            <div class="sec-title" style="color:${lowStockItems.length>0?'var(--amber)':'var(--muted)'}">⚠️ Low Stock</div>
-            ${lowStockItems.length===0?'<div class="tbl-card"><div class="empty" style="padding:20px">✅ All items well stocked</div></div>':lowAlerts}
+            <div class="sec-title" style="color:${lowStockItems.length>0?'var(--amber)':'var(--muted)'}"><span class="ico">⚠️</span> Low Stock</div>
+            ${lowStockItems.length===0?'<div class="tbl-card"><div class="empty" style="padding:20px"><span class="ico">✅</span> All items well stocked</div></div>':lowAlerts}
           </div>
         </div>
         ${recentSales.length>0?`<div style="margin-top:20px"><div class="sec-title">Recent Transactions</div>
@@ -529,7 +611,7 @@ function pagePOS() {
       <div class="pos-grid">
         <div class="pos-left">
           <div class="scan-panel">
-            <div class="scan-lbl">▦ Scan / Enter Product Code</div>
+            <div class="scan-lbl"><span class="ico">▦</span> Scan / Enter Product Code</div>
             <div class="inp-row">
               <input class="inp inp-lg" id="scan-inp" placeholder="Scan barcode or type code..." autofocus/>
               <button class="btn btn-primary" id="scan-btn">Look Up</button>
@@ -537,7 +619,7 @@ function pagePOS() {
             <div id="scan-result"></div>
           </div>
           <div class="scan-panel">
-            <div class="scan-lbl">👥 Customer (Optional)</div>
+            <div class="scan-lbl"><span class="ico">👥</span> Customer (Optional)</div>
             <div class="inp-row">
               <input class="inp" id="cust-phone" placeholder="Enter customer phone number..."/>
               <button class="btn btn-ghost" id="cust-btn">Find</button>
@@ -547,8 +629,8 @@ function pagePOS() {
           <div id="last-sale-info" style="display:none;padding:12px 16px;background:var(--green-dim);border:1px solid var(--green);border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center"></div>
         </div>
         <div class="pos-right">
-          <div class="cart-head"><span>🛒 Cart (<span id="cart-count">0</span>)</span><button class="btn btn-ghost btn-sm" id="clear-cart">Clear</button></div>
-          <div class="cart-items" id="cart-items"><div class="empty"><div class="empty-icon">🛒</div>Cart is empty<br/><small>Scan a product to add</small></div></div>
+          <div class="cart-head"><span><span class="ico">🛒</span> Cart (<span id="cart-count">0</span>)</span><button class="btn btn-ghost btn-sm" id="clear-cart">Clear</button></div>
+          <div class="cart-items" id="cart-items"><div class="empty"><div class="empty-icon"><span class="ico">🛒</span></div>Cart is empty<br/><small>Scan a product to add</small></div></div>
           <div class="cart-promo">
             <div class="inp-row">
               <input class="inp" id="promo-inp" placeholder="Promo code..." style="font-size:12px"/>
@@ -565,9 +647,9 @@ function pagePOS() {
             <div>
               <div class="sec-title" style="margin-bottom:6px">Payment Method</div>
               <div class="pay-methods">
-                <button class="pay-btn active" data-pay="cash">💵 Cash</button>
-                <button class="pay-btn" data-pay="card">💳 Card</button>
-                <button class="pay-btn" data-pay="transfer">📲 Transfer</button>
+                <button class="pay-btn active" data-pay="cash"><span class="ico">💵</span> Cash</button>
+                <button class="pay-btn" data-pay="card"><span class="ico">💳</span> Card</button>
+                <button class="pay-btn" data-pay="transfer"><span class="ico">📲</span> Transfer</button>
               </div>
             </div>
             <div id="cash-row">
@@ -577,7 +659,7 @@ function pagePOS() {
                 <div style="display:flex;align-items:center;padding:0 10px;color:var(--green);font-family:var(--mono);font-size:13px;white-space:nowrap" id="change-display"></div>
               </div>
             </div>
-            <button class="btn btn-primary btn-full" id="checkout-btn" disabled>💳 Checkout — ₦0.00</button>
+            <button class="btn btn-primary btn-full" id="checkout-btn" disabled><span class="ico">💳</span> Checkout — ₦0.00</button>
           </div>
         </div>
       </div>
@@ -595,7 +677,7 @@ function pagePOS() {
     el('t-disc').textContent = fmt(disc);
     el('t-total').textContent = fmt(total);
     el('cart-count').textContent = cart.length;
-    el('checkout-btn').textContent = `💳 Checkout — ${fmt(total)}`;
+    el('checkout-btn').textContent = `<span class="ico">💳</span> Checkout — ${fmt(total)}`;
     el('checkout-btn').disabled = cart.length === 0;
     const paid = parseFloat(el('amount-paid')?.value) || 0;
     const change = Math.max(0, paid - total);
@@ -606,7 +688,7 @@ function pagePOS() {
 
   function renderCart() {
     const ci = el('cart-items');
-    if (cart.length === 0) { ci.innerHTML = '<div class="empty"><div class="empty-icon">🛒</div>Cart is empty<br/><small>Scan a product to add</small></div>'; return; }
+    if (cart.length === 0) { ci.innerHTML = '<div class="empty"><div class="empty-icon"><span class="ico">🛒</span></div>Cart is empty<br/><small>Scan a product to add</small></div>'; return; }
     ci.innerHTML = cart.map((item,i)=>`
       <div class="cart-item">
         <div class="ci-info">
@@ -680,7 +762,7 @@ function pagePOS() {
     try {
       const data = await POST('/discounts/validate', { code, subtotal: sub });
       promoApplied = data;
-      el('promo-msg').textContent = '✅ ' + data.discount.code + ' — ' + fmt(data.amount) + ' off';
+      el('promo-msg').textContent = '<span class="ico">✅</span> ' + data.discount.code + ' — ' + fmt(data.amount) + ' off';
       toast('Promo applied!');
       recalc();
     } catch(e) { el('promo-msg').textContent=''; promoApplied=null; toast(e.message,'err'); }
@@ -720,7 +802,7 @@ function pagePOS() {
     const total = Math.max(0,sub-disc);
     const paid = parseFloat(el('amount-paid').value)||0;
     if (payMethod==='cash' && paid < total) { toast('Amount paid is less than total','err'); return; }
-    el('checkout-btn').disabled=true; el('checkout-btn').textContent='⏳ Processing...';
+    el('checkout-btn').disabled=true; el('checkout-btn').textContent='<span class="ico">⏳</span> Processing...';
     try {
       const result = await POST('/sales', {
         items: cart.map(c=>({ product_id:c.id, quantity:c.qty })),
@@ -739,13 +821,13 @@ function pagePOS() {
       }
       const lsi = el('last-sale-info');
       lsi.style.display='flex';
-      lsi.innerHTML=`<span>✅ Last sale: <strong>${esc(result.ref)}</strong> — ${fmt(result.total)} (Change: ${fmt(result.change||0)})</span><button onclick="printReceipt(${result.saleId})" class="btn btn-ghost btn-sm">🖨️ Receipt</button>`;
+      lsi.innerHTML=`<span><span class="ico">✅</span> Last sale: <strong>${esc(result.ref)}</strong> — ${fmt(result.total)} (Change: ${fmt(result.change||0)})</span><button onclick="printReceipt(${result.saleId})" class="btn btn-ghost btn-sm"><span class="ico">🖨️</span> Receipt</button>`;
       cart=[]; promoApplied=null; customer=null;
       el('scan-inp').value=''; el('promo-inp').value=''; el('promo-msg').textContent='';
       el('amount-paid').value=''; el('cust-phone').value=''; el('cust-result').innerHTML='';
       scanResult.innerHTML='';
       recalc();
-    } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`💳 Checkout — ${fmt(total)}`; }
+    } catch(e) { toast(e.message,'err'); el('checkout-btn').disabled=false; el('checkout-btn').textContent=`<span class="ico">💳</span> Checkout — ${fmt(total)}`; }
   };
   recalc();
   setTimeout(()=>scanInp.focus(),100);
@@ -787,7 +869,7 @@ async function pageInventory() {
           <div class="tbl-scroll"><table>
             <thead><tr><th>Code</th><th>Name</th><th>Category</th><th>Price</th><th>Cost</th><th>Stock</th><th>Unit</th><th>Supplier</th>${isAdmin?'<th>Actions</th>':''}</tr></thead>
             <tbody>
-              ${products.length===0?`<tr><td colspan="9"><div class="empty"><div class="empty-icon">📦</div>No products found</div></td></tr>`:products.map(p=>`
+              ${products.length===0?`<tr><td colspan="9"><div class="empty"><div class="empty-icon"><span class="ico">📦</span></div>No products found</div></td></tr>`:products.map(p=>`
               <tr>
                 <td><span class="tag">${esc(p.code)}</span></td>
                 <td><strong>${esc(p.name)}</strong>${p.barcode?`<div style="font-size:10px;color:var(--muted)">Barcode: ${esc(p.barcode)}</div>`:''}</td>
@@ -798,9 +880,9 @@ async function pageInventory() {
                 <td style="font-size:12px;color:var(--muted)">${esc(p.unit||'piece')}</td>
                 <td style="font-size:12px;color:var(--muted)">${esc(p.supplier_name||'—')}</td>
                 ${isAdmin?`<td><div class="td-actions">
-                  <button class="btn btn-ghost btn-sm" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>✏️</button>
-                  <button class="btn btn-secondary btn-sm" onclick='stockAdjust(${JSON.stringify(p).replace(/'/g,"&#39;")})'>📦</button>
-                  <button class="btn btn-danger btn-sm" onclick="delProduct(${p.id})">🗑️</button>
+                  <button class="btn btn-ghost btn-sm" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'><span class="ico">✏️</span></button>
+                  <button class="btn btn-secondary btn-sm" onclick='stockAdjust(${JSON.stringify(p).replace(/'/g,"&#39;")})'><span class="ico">📦</span></button>
+                  <button class="btn btn-danger btn-sm" onclick="delProduct(${p.id})"><span class="ico">🗑️</span></button>
                 </div></td>`:''}
               </tr>`).join('')}
             </tbody>
@@ -826,7 +908,7 @@ async function pageInventory() {
       <div class="field"><label>Movement Type</label><select class="sel" id="st-type"><option value="restock">Restock (Add)</option><option value="adjustment">Manual Adjustment</option><option value="damage">Damaged / Lost</option><option value="return">Customer Return</option></select></div>
       <div class="field"><label>Quantity Change</label><input class="inp" type="number" id="st-qty" placeholder="e.g. 50 to add, -10 to remove"/></div>
       <div class="field"><label>Note (optional)</label><input class="inp" id="st-note" placeholder="e.g. Received from supplier"/></div>`;
-    modal('📦 Adjust Stock — ' + p.name, form, [
+    modal('<span class="ico">📦</span> Adjust Stock — ' + p.name, form, [
       { label:'Cancel' },
       { label:'Update Stock', cls:'btn-primary', close:false, action: async () => {
         try {
@@ -849,22 +931,22 @@ function openProductModal(prod, categories, suppliers) {
   form.innerHTML = `
     <div class="field" style="grid-column:1/-1">
       <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--muted);margin-bottom:4px">
-        <strong style="color:var(--text)">📦 3 ways to identify a product:</strong><br/>
-        <span style="color:var(--green)">①</span> <strong>Barcode</strong> — scan with a barcode scanner or type the number printed on the item<br/>
-        <span style="color:var(--green)">②</span> <strong>Item Code</strong> — your own short internal code (e.g. 001, ENG-OIL)<br/>
-        <span style="color:var(--green)">③</span> <strong>Product Name</strong> — the full name customers see on receipts
+        <strong style="color:var(--text)"><span class="ico">📦</span> 3 ways to identify a product:</strong><br/>
+        <span style="color:var(--green)"><span class="ico">①</span> <strong>Barcode</strong> — scan with a barcode scanner or type the number printed on the item<br/>
+        <span style="color:var(--green)"><span class="ico">②</span> <strong>Item Code</strong> — your own short internal code (e.g. 001, ENG-OIL)<br/>
+        <span style="color:var(--green)"><span class="ico">③</span> <strong>Product Name</strong> — the full name customers see on receipts
       </div>
     </div>
     <div class="field" style="grid-column:1/-1">
-      <label>① Barcode <span style="font-size:10px;color:var(--muted);font-weight:400">(scan the item or type the barcode number)</span></label>
+      <label><span class="ico">①</span> Barcode <span style="font-size:10px;color:var(--muted);font-weight:400">(scan the item or type the barcode number)</span></label>
       <div style="display:flex;gap:8px;align-items:center">
         <input class="inp" id="p-barcode" value="${esc(prod?.barcode||'')}" placeholder="Scan barcode or type number..." style="flex:1;font-family:monospace;font-size:15px;letter-spacing:1px"/>
-        <button class="btn btn-secondary" id="scan-barcode-btn" title="Click then scan with barcode scanner">📷 Scan</button>
+        <button class="btn btn-secondary" id="scan-barcode-btn" title="Click then scan with barcode scanner"><span class="ico">📷</span> Scan</button>
       </div>
       <div style="font-size:11px;color:var(--muted);margin-top:4px" id="barcode-hint">Click Scan then point your barcode scanner at the item</div>
     </div>
     <div class="field">
-      <label>② Item Code * <span style="font-size:10px;color:var(--muted);font-weight:400">(your internal code)</span></label>
+      <label><span class="ico">②</span> Item Code * <span style="font-size:10px;color:var(--muted);font-weight:400">(your internal code)</span></label>
       <input class="inp" id="p-code" value="${esc(prod?.code||'')}" placeholder="e.g. 001 or ENG-OIL" style="font-family:monospace"/>
     </div>
     <div class="field">
@@ -872,7 +954,7 @@ function openProductModal(prod, categories, suppliers) {
       <input class="inp" id="p-unit" value="${esc(prod?.unit||'piece')}" placeholder="piece, set, litre, kg..."/>
     </div>
     <div class="field" style="grid-column:1/-1">
-      <label>③ Product Name * <span style="font-size:10px;color:var(--muted);font-weight:400">(shown on receipts)</span></label>
+      <label><span class="ico">③</span> Product Name * <span style="font-size:10px;color:var(--muted);font-weight:400">(shown on receipts)</span></label>
       <input class="inp" id="p-name" value="${esc(prod?.name||'')}" placeholder="e.g. Engine Oil 5W-30 (4L)"/>
     </div>
     <div class="field"><label>Selling Price (₦) *</label><input class="inp" type="number" id="p-price" value="${prod?.price||''}" placeholder="0.00"/></div>
@@ -883,7 +965,7 @@ function openProductModal(prod, categories, suppliers) {
     <div class="field"><label>Supplier</label><select class="sel" id="p-sup"><option value="">Select...</option>${suppliers.map(s=>`<option value="${s.id}"${prod?.supplier_id==s.id?' selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
     <div class="field" style="grid-column:1/-1"><label>Description</label><textarea class="inp" id="p-desc" rows="2" placeholder="Optional notes about this product">${esc(prod?.description||'')}</textarea></div>`;
 
-  const m = modal((isEdit?'✏️ Edit':'+ Add New') + ' Product', form, [
+  const m = modal((isEdit?'<span class="ico">✏️</span> Edit':'+ Add New') + ' Product', form, [
     { label:'Cancel' },
     { label: isEdit?'Save Changes':'Add Product', cls:'btn-primary', close:false, action: async()=>{
       const body = {
@@ -908,24 +990,25 @@ function openProductModal(prod, categories, suppliers) {
   ]);
   m.querySelector('.modal').classList.add('modal-lg');
 
+  // Barcode scan button — focuses input and waits for scanner
   const scanBtn = m.querySelector('#scan-barcode-btn');
   const barcodeInp = m.querySelector('#p-barcode');
   const hint = m.querySelector('#barcode-hint');
   let scanning = false;
   scanBtn.onclick = () => {
     scanning = true;
-    scanBtn.textContent = '🟢 Ready...';
+    scanBtn.textContent = '<span class="ico">🟢</span> Ready...';
     scanBtn.style.background = 'var(--green)';
     scanBtn.style.color = '#000';
-    hint.textContent = '✅ Scanner ready — scan the item now';
+    hint.textContent = '<span class="ico">✅</span> Scanner ready — scan the item now';
     hint.style.color = 'var(--green)';
     barcodeInp.value = '';
     barcodeInp.focus();
     barcodeInp.onkeydown = e => {
       if (e.key === 'Enter' && barcodeInp.value.trim()) {
-        scanBtn.textContent = '✅ Scanned!';
+        scanBtn.textContent = '<span class="ico">✅</span> Scanned!';
         hint.textContent = 'Barcode captured: ' + barcodeInp.value.trim();
-        setTimeout(()=>{ scanBtn.textContent='📷 Scan'; scanBtn.style.background=''; scanBtn.style.color=''; scanning=false; },2000);
+        setTimeout(()=>{ scanBtn.textContent='<span class="ico">📷</span> Scan'; scanBtn.style.background=''; scanBtn.style.color=''; scanning=false; },2000);
       }
     };
   };
@@ -949,7 +1032,7 @@ async function pageSales() {
         <div class="tbl-card"><div class="tbl-scroll"><table>
           <thead><tr><th>Ref</th><th>Date</th><th>Time</th><th>Cashier</th><th>Customer</th><th>Payment</th><th>Total</th><th>Actions</th></tr></thead>
           <tbody>
-            ${sales.length===0?'<tr><td colspan="8"><div class="empty"><div class="empty-icon">🧾</div>No sales yet</div></td></tr>':
+            ${sales.length===0?'<tr><td colspan="8"><div class="empty"><div class="empty-icon"><span class="ico">🧾</span></div>No sales yet</div></td></tr>':
             sales.map(s=>`<tr>
               <td><span class="tag">${esc(s.ref)}</span></td>
               <td style="font-size:12px">${new Date(s.created_at).toLocaleDateString()}</td>
@@ -959,8 +1042,8 @@ async function pageSales() {
               <td><span class="badge ${s.payment_method==='cash'?'badge-green':s.payment_method==='card'?'badge-blue':'badge-amber'}">${s.payment_method}</span></td>
               <td class="money">${fmt(s.total)}</td>
               <td><div class="td-actions">
-                <button class="btn btn-ghost btn-sm" onclick="viewSale(${s.id})">👁️</button>
-                <button onclick="printReceipt(${s.id})" class="btn btn-ghost btn-sm">🖨️</button>
+                <button class="btn btn-ghost btn-sm" onclick="viewSale(${s.id})"><span class="ico">👁️</span></button>
+                <button onclick="printReceipt(${s.id})" class="btn btn-ghost btn-sm"><span class="ico">🖨️</span></button>
               </div></td>
             </tr>`).join('')}
           </tbody>
@@ -984,9 +1067,9 @@ window.viewSale = async (id) => {
       ${sale.discount_amount>0?`<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--green)"><span>Discount</span><span>−${fmt(sale.discount_amount)}</span></div>`:''}
       <div style="display:flex;justify-content:space-between;font-weight:800;font-size:17px"><span>TOTAL</span><span style="color:var(--green);font-family:var(--mono)">${fmt(sale.total)}</span></div>
     </div>`;
-  modal('🧾 Sale — ' + sale.ref, body, [
+  modal('<span class="ico">🧾</span> Sale — ' + sale.ref, body, [
     { label:'Close' },
-    { label:'🖨️ Print Receipt', cls:'btn-primary', close:false, action:()=>printReceipt(id) }
+    { label:'<span class="ico">🖨️</span> Print Receipt', cls:'btn-primary', close:false, action:()=>printReceipt(id) }
   ]);
 };
 
@@ -1004,7 +1087,7 @@ async function pageCustomers() {
           <div class="tbl-toolbar"><div class="search-wrap"><input class="inp" id="cust-search" placeholder="Search name or phone..." value="${esc(search)}"/></div></div>
           <div class="tbl-scroll"><table>
             <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Loyalty Points</th><th>Total Spent</th><th>Since</th></tr></thead>
-            <tbody>${customers.length===0?'<tr><td colspan="6"><div class="empty"><div class="empty-icon">👥</div>No customers</div></td></tr>':customers.map(cu=>`
+            <tbody>${customers.length===0?'<tr><td colspan="6"><div class="empty"><div class="empty-icon"><span class="ico">👥</span></div>No customers</div></td></tr>':customers.map(cu=>`
               <tr><td><strong>${esc(cu.name)}</strong></td><td class="td-mono">${esc(cu.phone||'—')}</td><td style="font-size:12px;color:var(--muted)">${esc(cu.email||'—')}</td>
               <td><span class="badge badge-green">${cu.loyalty_points} pts</span></td><td class="money">${fmt(cu.total_spent)}</td>
               <td style="font-size:12px;color:var(--muted)">${new Date(cu.created_at).toLocaleDateString()}</td></tr>`).join('')}
@@ -1031,7 +1114,7 @@ async function pageDiscounts() {
       <button class="btn btn-primary" id="add-disc-btn">+ New Promo Code</button></div>
       <div class="page-body"><div class="tbl-card"><div class="tbl-scroll"><table>
         <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Purchase</th><th>Uses</th><th>Expires</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody>${discounts.length===0?'<tr><td colspan="8"><div class="empty"><div class="empty-icon">🎟️</div>No promo codes</div></td></tr>':discounts.map(d=>`
+        <tbody>${discounts.length===0?'<tr><td colspan="8"><div class="empty"><div class="empty-icon"><span class="ico">🎟️</span></div>No promo codes</div></td></tr>':discounts.map(d=>`
           <tr><td><span class="tag">${esc(d.code)}</span></td>
           <td><span class="badge badge-blue">${d.type}</span></td>
           <td class="money">${d.type==='percentage'?d.value+'%':fmt(d.value)}</td>
@@ -1052,7 +1135,7 @@ async function pageDiscounts() {
           <div class="field"><label>Max Uses</label><input class="inp" type="number" id="du" placeholder="Leave blank = unlimited"/></div>
           <div class="field" style="grid-column:1/-1"><label>Expiry Date</label><input class="inp" type="date" id="de"/></div>
         </div>`;
-      modal('🎟️ New Promo Code',form,[{label:'Cancel'},{label:'Create',cls:'btn-primary',close:false,action:async()=>{
+      modal('<span class="ico">🎟️</span> New Promo Code',form,[{label:'Cancel'},{label:'Create',cls:'btn-primary',close:false,action:async()=>{
         try{await POST('/discounts',{code:el('dc').value.toUpperCase(),type:el('dt').value,value:parseFloat(el('dv').value),min_purchase:parseFloat(el('dm').value)||0,max_uses:parseInt(el('du').value)||null,expires_at:el('de').value||null});toast('Promo created');document.querySelector('.overlay')?.remove();render();}catch(e){toast(e.message,'err');}
       }}]);
     };
@@ -1071,7 +1154,7 @@ async function pageSuppliers() {
       <button class="btn btn-primary" id="add-sup-btn">+ Add Supplier</button></div>
       <div class="page-body"><div class="tbl-card"><div class="tbl-scroll"><table>
         <thead><tr><th>Company</th><th>Contact Person</th><th>Phone</th><th>Email</th><th>Address</th><th>Added</th></tr></thead>
-        <tbody>${suppliers.length===0?'<tr><td colspan="6"><div class="empty"><div class="empty-icon">🚚</div>No suppliers</div></td></tr>':suppliers.map(s=>`
+        <tbody>${suppliers.length===0?'<tr><td colspan="6"><div class="empty"><div class="empty-icon"><span class="ico">🚚</span></div>No suppliers</div></td></tr>':suppliers.map(s=>`
           <tr><td><strong>${esc(s.name)}</strong></td><td>${esc(s.contact_person||'—')}</td><td class="td-mono">${esc(s.phone||'—')}</td>
           <td style="font-size:12px;color:var(--muted)">${esc(s.email||'—')}</td><td style="font-size:12px;color:var(--muted)">${esc(s.address||'—')}</td>
           <td style="font-size:12px;color:var(--muted)">${new Date(s.created_at).toLocaleDateString()}</td></tr>`).join('')}
@@ -1079,7 +1162,7 @@ async function pageSuppliers() {
     el('add-sup-btn').onclick=()=>{
       const form=document.createElement('div');
       form.innerHTML=`<div class="field"><label>Company Name *</label><input class="inp" id="sn"/></div><div class="form-grid"><div class="field"><label>Contact Person</label><input class="inp" id="sc"/></div><div class="field"><label>Phone</label><input class="inp" id="sp"/></div><div class="field"><label>Email</label><input class="inp" type="email" id="se"/></div><div class="field"><label>Address</label><input class="inp" id="sa"/></div></div>`;
-      modal('🚚 Add Supplier',form,[{label:'Cancel'},{label:'Save',cls:'btn-primary',close:false,action:async()=>{
+      modal('<span class="ico">🚚</span> Add Supplier',form,[{label:'Cancel'},{label:'Save',cls:'btn-primary',close:false,action:async()=>{
         try{await POST('/suppliers',{name:el('sn').value.trim(),contact_person:el('sc').value||null,phone:el('sp').value||null,email:el('se').value||null,address:el('sa').value||null});toast('Supplier added');document.querySelector('.overlay')?.remove();render();}catch(e){toast(e.message,'err');}
       }}]);
     };
@@ -1097,13 +1180,13 @@ async function pagePurchaseOrders() {
       <button class="btn btn-primary" id="add-po-btn">+ New Order</button></div>
       <div class="page-body"><div class="tbl-card"><div class="tbl-scroll"><table>
         <thead><tr><th>Ref</th><th>Supplier</th><th>Status</th><th>Total Cost</th><th>Created By</th><th>Date</th><th>Action</th></tr></thead>
-        <tbody>${orders.length===0?'<tr><td colspan="7"><div class="empty"><div class="empty-icon">📋</div>No purchase orders</div></td></tr>':orders.map(o=>`
+        <tbody>${orders.length===0?'<tr><td colspan="7"><div class="empty"><div class="empty-icon"><span class="ico">📋</span></div>No purchase orders</div></td></tr>':orders.map(o=>`
           <tr><td><span class="tag">${esc(o.ref)}</span></td><td>${esc(o.supplier_name||'—')}</td>
           <td><span class="badge ${o.status==='received'?'badge-green':o.status==='cancelled'?'badge-red':'badge-amber'}">${o.status}</span></td>
           <td class="money">${fmt(o.total_cost)}</td>
           <td style="font-size:12px;color:var(--muted)">${esc(o.created_by_name||'—')}</td>
           <td style="font-size:12px;color:var(--muted)">${new Date(o.created_at).toLocaleDateString()}</td>
-          <td>${o.status==='pending'?`<button class="btn btn-primary btn-sm" onclick="receivePO(${o.id})">✅ Receive</button>`:''}</td></tr>`).join('')}
+          <td>${o.status==='pending'?`<button class="btn btn-primary btn-sm" onclick="receivePO(${o.id})"><span class="ico">✅</span> Receive</button>`:''}</td></tr>`).join('')}
         </tbody></table></div></div></div>`;
     el('add-po-btn').onclick=()=>openPOModal(suppliers,products);
     window.receivePO=async(id)=>{if(!confirm('Mark as received? This will update stock.'))return;try{await POST('/purchase-orders/'+id+'/receive');toast('Stock updated!');render();}catch(e){toast(e.message,'err');}};
@@ -1129,7 +1212,7 @@ function openPOModal(suppliers, products) {
   items=[{product_id:'',quantity:'',unit_cost:''}];
   renderItems(itemsDiv);
   wrapper.querySelector('#add-po-item').onclick=()=>{items.push({product_id:'',quantity:'',unit_cost:''});renderItems(itemsDiv);};
-  const m=modal('📋 New Purchase Order',wrapper,[{label:'Cancel'},{label:'Create Order',cls:'btn-primary',close:false,action:async()=>{
+  const m=modal('<span class="ico">📋</span> New Purchase Order',wrapper,[{label:'Cancel'},{label:'Create Order',cls:'btn-primary',close:false,action:async()=>{
     const supId=el('po-sup').value;
     if(!supId){toast('Select supplier','err');return;}
     const poItems=items.map((_,i)=>({product_id:parseInt(el(`poi-p-${i}`)?.value),quantity:parseInt(el(`poi-q-${i}`)?.value),unit_cost:parseFloat(el(`poi-c-${i}`)?.value)})).filter(i=>i.product_id&&i.quantity&&i.unit_cost);
@@ -1152,7 +1235,7 @@ async function pageUsers() {
       <div class="page-header">
         <div><div class="page-title">Staff Accounts</div><div class="page-sub">${users.length} accounts</div></div>
         <div class="page-actions">
-          <button class="btn btn-secondary" id="report-btn">📧 Monthly Report</button>
+          <button class="btn btn-secondary" id="report-btn"><span class="ico">📧</span> Monthly Report</button>
           <button class="btn btn-primary" id="add-user-btn">+ Add Staff</button>
         </div>
       </div>
@@ -1167,24 +1250,25 @@ async function pageUsers() {
             <td><span class="badge ${u.active?'badge-green':'badge-red'}">${u.active?'Active':'Inactive'}</span></td>
             <td><div class="td-actions">
               <button class="btn btn-sm ${u.active?'btn-ghost':'btn-primary'}" onclick="toggleUser(${u.id},${u.active})">${u.active?'Disable':'Enable'}</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id},'${esc(u.name)}')">🗑️ Delete</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id},'${esc(u.name)}')"><span class="ico">🗑️</span> Delete</button>
             </div></td>
           </tr>`).join('')}</tbody>
         </table></div></div>
 
         <div style="margin-top:24px;padding:18px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div class="sec-title">🔐 Role Permissions</div>
+          <div class="sec-title"><span class="ico">🔐</span> Role Permissions</div>
           <table style="width:100%;font-size:12px;margin-top:10px">
             <thead><tr><th style="text-align:left;color:var(--muted);font-size:10px;padding-bottom:8px">Permission</th><th style="color:var(--muted);font-size:10px">Admin</th><th style="color:var(--muted);font-size:10px">Manager</th><th style="color:var(--muted);font-size:10px">Cashier</th></tr></thead>
-            <tbody>${[['POS / Checkout','✅','✅','✅'],['View Inventory','✅','✅','✅'],['Add/Edit Products','✅','✅','❌'],['Delete Products','✅','❌','❌'],['Sales Reports','✅','✅','❌'],['Manage Promos','✅','✅','❌'],['Purchase Orders','✅','✅','❌'],['Create/Delete Staff','✅','❌','❌'],['Monthly Email Report','✅','❌','❌']].map(([p,...r])=>`<tr><td style="padding:5px 0">${p}</td>${r.map(v=>`<td style="text-align:center">${v}</td>`).join('')}</tr>`).join('')}</tbody>
+            <tbody>${[['POS / Checkout','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">✅</span>'],['View Inventory','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">✅</span>'],['Add/Edit Products','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">❌</span>'],['Delete Products','<span class="ico">✅</span>','<span class="ico">❌</span>','<span class="ico">❌</span>'],['Sales Reports','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">❌</span>'],['Manage Promos','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">❌</span>'],['Purchase Orders','<span class="ico">✅</span>','<span class="ico">✅</span>','<span class="ico">❌</span>'],['Create/Delete Staff','<span class="ico">✅</span>','<span class="ico">❌</span>','<span class="ico">❌</span>'],['Monthly Email Report','<span class="ico">✅</span>','<span class="ico">❌</span>','<span class="ico">❌</span>']].map(([p,...r])=>`<tr><td style="padding:5px 0">${p}</td>${r.map(v=>`<td style="text-align:center">${v}</td>`).join('')}</tr>`).join('')}</tbody>
           </table>
         </div>
       </div>`;
 
+    // Add Staff
     el('add-user-btn').onclick=()=>{
       const form=document.createElement('div');
       form.innerHTML=`<div class="field"><label>Full Name *</label><input class="inp" id="un-name" placeholder="e.g. John Doe"/></div><div class="form-grid"><div class="field"><label>Username *</label><input class="inp" id="un-user" placeholder="letters, numbers, _"/></div><div class="field"><label>Role</label><select class="sel" id="un-role"><option value="cashier">Cashier</option><option value="manager">Manager</option><option value="admin">Admin</option></select></div></div><div class="field"><label>Password (min 8 chars)</label><input class="inp" type="password" id="un-pass" placeholder="Minimum 8 characters"/></div>`;
-      modal('👤 Add Staff Account',form,[{label:'Cancel'},{label:'Create Account',cls:'btn-primary',close:false,action:async()=>{
+      modal('<span class="ico">👤</span> Add Staff Account',form,[{label:'Cancel'},{label:'Create Account',cls:'btn-primary',close:false,action:async()=>{
         try{
           await POST('/users',{name:el('un-name').value.trim(),username:el('un-user').value.trim(),role:el('un-role').value,password:el('un-pass').value});
           toast('Account created');document.querySelector('.overlay')?.remove();render();
@@ -1192,6 +1276,7 @@ async function pageUsers() {
       }}]);
     };
 
+    // Monthly Report
     el('report-btn').onclick=()=>{
       const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
       const years=[2024,2025,2026,2027];
@@ -1206,23 +1291,23 @@ async function pageUsers() {
           <div class="field"><label>Year</label><select class="sel" id="rpt-year">${years.map(y=>`<option value="${y}"${y===defYear?' selected':''}>${y}</option>`).join('')}</select></div>
         </div>
         <div style="font-size:12px;color:var(--amber);padding:10px 14px;background:var(--amber-dim);border:1px solid var(--amber);border-radius:6px">
-          ⚠️ Set EMAIL_USER and EMAIL_PASS in <code>server/.env</code> before sending.
+          <span class="ico">⚠️</span> Set EMAIL_USER and EMAIL_PASS in <code>server/.env</code> before sending.
         </div>`;
-      modal('📧 Monthly Transactions Report',form,[
+      modal('<span class="ico">📧</span> Monthly Transactions Report',form,[
         {label:'Cancel'},
-        {label:'⬇️ Download CSV',cls:'btn-secondary',close:false,action:()=>{
+        {label:'<span class="ico">⬇️</span> Download CSV',cls:'btn-secondary',close:false,action:()=>{
           window.open('/api/admin/monthly-csv?year='+el('rpt-year').value+'&month='+el('rpt-month').value,'_blank');
         }},
-        {label:'📧 Send to Email',cls:'btn-primary',close:false,action:async()=>{
+        {label:'<span class="ico">📧</span> Send to Email',cls:'btn-primary',close:false,action:async()=>{
           const btn=document.querySelector('.overlay .btn-primary');
-          btn.disabled=true; btn.textContent='⏳ Sending...';
+          btn.disabled=true; btn.textContent='<span class="ico">⏳</span> Sending...';
           try{
             const d=await POST('/admin/send-monthly-report',{year:parseInt(el('rpt-year').value),month:parseInt(el('rpt-month').value)});
-            toast('✅ Report sent! '+d.transactions+' transactions');
+            toast('<span class="ico">✅</span> Report sent! '+d.transactions+' transactions');
             document.querySelector('.overlay')?.remove();
           }catch(e){
             toast(e.message||'Email failed — check server/.env','err');
-            btn.disabled=false; btn.textContent='📧 Send to Email';
+            btn.disabled=false; btn.textContent='<span class="ico">📧</span> Send to Email';
           }
         }}
       ]);
@@ -1252,17 +1337,15 @@ if (State.user && State.token) {
   renderLogin();
 }
 
-// ── RECEIPT PRINTING — Optimised for 80mm thermal (72.1mm printable width) ────
+// ── RECEIPT PRINTING ─────────────────────────────────────────────────────────
 async function printReceipt(saleId) {
   try {
     const sale = await GET('/sales/' + saleId + '/receipt');
     const fmtR = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
     const d = new Date(sale.created_at);
     const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit', minute:'2-digit'});
-
-    // Build item rows — truncate long names so they don't wrap badly on 72mm paper
     const itemRows = (sale.items || []).map(i => {
-      const name = String(i.product_name || '').substring(0, 22); // keep within 72mm
+      const name = String(i.product_name || '').substring(0, 22);
       return `<tr>
         <td style="word-break:break-word;max-width:105px">${name}</td>
         <td style="text-align:center;white-space:nowrap">${i.quantity}</td>
@@ -1277,190 +1360,70 @@ async function printReceipt(saleId) {
 <meta charset="UTF-8"/>
 <title>Receipt ${sale.ref}</title>
 <style>
-  /* ── Reset ── */
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-  /* ── Page: 80mm wide, auto height so thermal cutter fires at exact content end ── */
-  @page {
-    size: 80mm auto;
-    margin: 3mm 4mm 6mm 4mm;  /* keeps content inside 72.1mm printable width */
-  }
-
-  /* ── Base body — used both for screen preview and print ── */
-  body {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 11px;
-    line-height: 1.45;
-    color: #000;
-    background: #fff;
-    /* screen: center receipt in grey area */
-    background-color: #e8e8e8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 0 24px;
-    gap: 14px;
-  }
-
-  /* ── Screen-only preview elements ── */
-  .preview-label {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    color: #555;
-    background: #fff9db;
-    border: 1px solid #e6c800;
-    border-radius: 4px;
-    padding: 5px 14px;
-  }
-  .receipt-box {
-    background: #fff;
-    width: 72mm;
-    padding: 5px 0 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.25);
-  }
-  .print-btn {
-    font-family: Arial, sans-serif;
-    padding: 9px 26px;
-    font-size: 13px;
-    cursor: pointer;
-    background: #111;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    letter-spacing: .3px;
-  }
-
-  /* ── Typography ── */
-  .center  { text-align: center; }
-  .bold    { font-weight: bold; }
-  .big     { font-size: 13px; font-weight: bold; letter-spacing: .5px; }
-  .small   { font-size: 9px; }
-  .divider { border: none; border-top: 1px dashed #555; margin: 4px 0; }
-  .spacer  { height: 5px; }
-
-  /* ── Items table ── */
-  table            { width: 100%; border-collapse: collapse; table-layout: fixed; }
-  th               { font-size: 9px; font-weight: bold; border-bottom: 1px solid #000;
-                     padding: 2px 1px; text-transform: uppercase; }
-  td               { font-size: 10px; padding: 2px 1px; vertical-align: top; }
-  .col-item        { width: 42%; }
-  .col-qty         { width: 10%; }
-  .col-price       { width: 23%; }
-  .col-total       { width: 25%; }
-
-  /* ── Totals table ── */
-  .totals-table td { font-size: 10px; padding: 1px 1px; }
-  .grand td        { font-size: 12px; font-weight: bold;
-                     border-top: 1px solid #000; padding-top: 3px; }
-
-  /* ── Footer ── */
-  .footer { font-size: 9px; text-align: center; margin-top: 5px; }
-
-  /* ── PRINT: strip screen chrome, let @page control everything ── */
-  @media print {
-    html, body {
-      background: #fff !important;
-      display: block !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      width: auto !important;
-    }
-    .preview-label, .print-btn { display: none !important; }
-    .receipt-box {
-      box-shadow: none !important;
-      width: auto !important;
-      padding: 0 !important;
-    }
-  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  @page{size:80mm auto;margin:3mm 4mm 6mm 4mm}
+  body{font-family:'Courier New',Courier,monospace;font-size:11px;line-height:1.45;color:#000;background:#e8e8e8;display:flex;flex-direction:column;align-items:center;padding:16px 0 24px;gap:14px}
+  .preview-label{font-family:Arial,sans-serif;font-size:12px;color:#555;background:#fff9db;border:1px solid #e6c800;border-radius:4px;padding:5px 14px}
+  .receipt-box{background:#fff;width:72mm;padding:5px 0 8px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .print-btn{font-family:Arial,sans-serif;padding:9px 26px;font-size:13px;cursor:pointer;background:#111;color:#fff;border:none;border-radius:5px}
+  .center{text-align:center}.bold{font-weight:bold}.big{font-size:13px;font-weight:bold;letter-spacing:.5px}
+  .small{font-size:9px}.divider{border:none;border-top:1px dashed #555;margin:4px 0}.spacer{height:5px}
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  th{font-size:9px;font-weight:bold;border-bottom:1px solid #000;padding:2px 1px;text-transform:uppercase}
+  td{font-size:10px;padding:2px 1px;vertical-align:top}
+  .col-item{width:42%}.col-qty{width:10%}.col-price{width:23%}.col-total{width:25%}
+  .totals-table td{font-size:10px;padding:1px 1px}
+  .grand td{font-size:12px;font-weight:bold;border-top:1px solid #000;padding-top:3px}
+  .footer{font-size:9px;text-align:center;margin-top:5px}
+  @media print{html,body{background:#fff!important;display:block!important;padding:0!important;margin:0!important;width:auto!important} .preview-label,.print-btn{display:none!important} .receipt-box{box-shadow:none!important;width:auto!important;padding:0!important}}
 </style>
 </head>
 <body>
-
-<div class="preview-label">🖨️ 80mm Thermal Preview — click Print below</div>
-
-  <div class="receipt-box">
-
-    <!-- HEADER -->
-    <div class="center bold big">C.A. CAR ACCESSORIES</div>
-    <div class="center small">Quality Auto Parts &amp; Accessories</div>
-    <div class="center small">Tel: 07061909275 | 09049061562</div>
-    <hr class="divider"/>
-
-    <!-- META -->
-    <div>Receipt: <strong>${sale.ref}</strong></div>
-    <div>Date: ${dateStr}</div>
-    <div>Cashier: ${sale.cashier_name || 'Staff'}</div>
-    ${sale.customer_name ? `<div>Customer: ${sale.customer_name}</div>` : ''}
-    <hr class="divider"/>
-
-    <!-- ITEMS -->
-    <table>
-      <colgroup>
-        <col class="col-item"/>
-        <col class="col-qty"/>
-        <col class="col-price"/>
-        <col class="col-total"/>
-      </colgroup>
-      <thead>
-        <tr>
-          <th style="text-align:left">Item</th>
-          <th style="text-align:center">Qty</th>
-          <th style="text-align:right">Price</th>
-          <th style="text-align:right">Total</th>
-        </tr>
-      </thead>
-      <tbody>${itemRows}</tbody>
-    </table>
-    <hr class="divider"/>
-
-    <!-- TOTALS -->
-    <table class="totals-table">
-      <colgroup><col style="width:60%"/><col style="width:40%"/></colgroup>
-      <tbody>
-        <tr><td>Subtotal</td><td style="text-align:right">${fmtR(sale.subtotal)}</td></tr>
-        ${sale.discount_amount > 0
-          ? `<tr><td>Discount</td><td style="text-align:right">- ${fmtR(sale.discount_amount)}</td></tr>`
-          : ''}
-        <tr class="grand">
-          <td>TOTAL</td>
-          <td style="text-align:right">${fmtR(sale.total)}</td>
-        </tr>
-        <tr>
-          <td>Paid (${sale.payment_method})</td>
-          <td style="text-align:right">${fmtR(sale.amount_paid)}</td>
-        </tr>
-        <tr>
-          <td>Change</td>
-          <td style="text-align:right">${fmtR(sale.change_given)}</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr class="divider"/>
-
-    <!-- LOYALTY & FOOTER -->
-
-    <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech<br/>08147474278</div>
-    <div class="spacer"></div>
-
-  </div><!-- /.receipt-box -->
-
-  <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
-
-<script>
-  // Auto-trigger print dialog after a short delay
-  setTimeout(() => window.print(), 800);
-<\/script>
+<div class="preview-label">Thermal Receipt Preview — click Print</div>
+<div class="receipt-box">
+  <div class="center bold big">C.A. CAR ACCESSORIES</div>
+  <div class="center small">Quality Auto Parts &amp; Accessories</div>
+  <div class="center small">Tel: 07061909275 | 09049061562</div>
+  <hr class="divider"/>
+  <div>Receipt: <strong>${sale.ref}</strong></div>
+  <div>Date: ${dateStr}</div>
+  <div>Cashier: ${sale.cashier_name || 'Staff'}</div>
+  ${sale.customer_name ? `<div>Customer: ${sale.customer_name}</div>` : ''}
+  <hr class="divider"/>
+  <table>
+    <colgroup><col class="col-item"/><col class="col-qty"/><col class="col-price"/><col class="col-total"/></colgroup>
+    <thead><tr><th style="text-align:left">Item</th><th style="text-align:center">Qty</th><th style="text-align:right">Price</th><th style="text-align:right">Total</th></tr></thead>
+    <tbody>${itemRows}</tbody>
+  </table>
+  <hr class="divider"/>
+  <table class="totals-table">
+    <colgroup><col style="width:60%"/><col style="width:40%"/></colgroup>
+    <tbody>
+      <tr><td>Subtotal</td><td style="text-align:right">${fmtR(sale.subtotal)}</td></tr>
+      ${sale.discount_amount > 0 ? `<tr><td>Discount</td><td style="text-align:right">- ${fmtR(sale.discount_amount)}</td></tr>` : ''}
+      <tr class="grand"><td>TOTAL</td><td style="text-align:right">${fmtR(sale.total)}</td></tr>
+      <tr><td>Paid (${sale.payment_method})</td><td style="text-align:right">${fmtR(sale.amount_paid)}</td></tr>
+      <tr><td>Change</td><td style="text-align:right">${fmtR(sale.change_given)}</td></tr>
+    </tbody>
+  </table>
+  <hr class="divider"/>
+  <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech | 08147474278</div>
+  <div class="spacer"></div>
+</div>
+<button class="print-btn" onclick="window.print()">Print Receipt</button>
+<script>setTimeout(()=>window.print(),800);<\/script>
 </body>
 </html>`;
 
     const w = window.open('', '_blank', 'width=420,height=650,scrollbars=yes');
-    if (!w) { toast('Pop-up blocked — please allow pop-ups for this site', 'warn'); return; }
+    if (!w) { toast('Allow pop-ups for this site to print receipts', 'warn'); return; }
     w.document.write(receiptHTML);
     w.document.close();
   } catch(e) {
     toast('Could not load receipt: ' + e.message, 'err');
   }
 }
+
 </script>
 </body>
 </html>
