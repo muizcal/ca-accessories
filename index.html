@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>C.A. Car Accessories</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -17,10 +18,18 @@
   --blue:#4db8ff;--blue-dim:rgba(77,184,255,.1);
   --purple:#a78bfa;--purple-dim:rgba(167,139,250,.1);
   --text:#ddeeff;--muted:#4d6b8a;--muted2:#8faabf;
-  --mono:'DM Mono',monospace;--sans:'Outfit',sans-serif;
+  --mono:'DM Mono',monospace;
+  --sans:'Outfit','Segoe UI Emoji','Segoe UI Symbol','Apple Color Emoji','Noto Color Emoji',sans-serif;
   --radius:8px;--radius-lg:12px;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;overflow:hidden}
+/* Force emoji to render as color pictographs on Windows 7 / older browsers */
+html,body{
+  height:100%;background:var(--bg);color:var(--text);
+  font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol','Apple Color Emoji','Noto Color Emoji',sans-serif;
+  font-size:14px;line-height:1.5;overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
@@ -43,10 +52,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 #sidebar.collapsed .sb-logo{padding:18px 12px;display:flex;justify-content:space-between;align-items:center}
 
 .sb-nav{flex:1;padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:13px;font-weight:500;width:100%;text-align:left;transition:all .15s;white-space:nowrap;position:relative}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;background:none;border:none;color:var(--muted);font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-size:13px;font-weight:500;width:100%;text-align:left;transition:all .15s;white-space:nowrap;position:relative}
 .nav-btn:hover{background:var(--surface2);color:var(--text)}
 .nav-btn.active{background:var(--green-dim);color:var(--green)}
-.nav-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center}
+.nav-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center;font-family:var(--emoji)}
 .nav-label{flex:1}
 .nav-badge{background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:700}
 #sidebar.collapsed .nav-label,#sidebar.collapsed .nav-badge{display:none}
@@ -59,7 +68,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .user-rl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 #sidebar.collapsed .user-info .user-nm,#sidebar.collapsed .user-info .user-rl{display:none}
 #sidebar.collapsed .user-info{justify-content:center}
-.logout-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:var(--radius);padding:7px 12px;cursor:pointer;font-size:12px;font-family:var(--sans);font-weight:600;display:flex;align-items:center;gap:6px;width:100%;justify-content:center}
+.logout-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:var(--radius);padding:7px 12px;cursor:pointer;font-size:12px;font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;width:100%;justify-content:center}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 #sidebar.collapsed .logout-btn span{display:none}
 
@@ -76,7 +85,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .page-actions{display:flex;gap:8px;flex-wrap:wrap}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;border-radius:var(--radius);font-family:'Outfit','Segoe UI Emoji','Segoe UI Symbol',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn-primary{background:var(--green);color:#07090d}
 .btn-primary:hover:not(:disabled){background:#00f5ae}
@@ -143,7 +152,7 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
 
 /* TOAST */
 #toast-area{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.toast{padding:12px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;background:var(--surface);border-left:4px solid var(--green);color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.5);animation:slideIn .2s ease;min-width:250px}
+.toast{padding:12px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;font-family:var(--emoji);background:var(--surface);border-left:4px solid var(--green);color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.5);animation:slideIn .2s ease;min-width:250px}
 .toast.err{border-left-color:var(--red)}
 .toast.warn{border-left-color:var(--amber)}
 
@@ -181,7 +190,7 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
 
 /* EMPTY STATE */
 .empty{text-align:center;padding:48px;color:var(--muted)}
-.empty-icon{font-size:42px;margin-bottom:12px}
+.empty-icon{font-size:42px;margin-bottom:12px;font-family:var(--emoji)}
 
 /* CHARTS (simple CSS bar) */
 .bar-chart{display:flex;align-items:flex-end;gap:6px;height:160px;padding:0 4px}
@@ -218,6 +227,24 @@ code{color:var(--green);font-family:var(--mono)}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 
 /* RESPONSIVE */
+/* ═══ EMOJI FONT FIX ═══
+   Windows desktop monitors (especially 1280×1024) often don't auto-render
+   emoji unless the font stack explicitly includes Segoe UI Emoji first.
+   This block makes emojis visible everywhere. */
+button, td, th, div, span, label, p, h1, h2, h3, h4, li, a {
+  font-family: 'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji','Outfit',sans-serif;
+}
+input, select, textarea {
+  font-family: 'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji','Outfit',sans-serif;
+}
+.td-mono, code, .tag, .money, .stat-val, .r-price, .qty-num,
+.ci-price, .total-row.big, .user-nm, .login-title {
+  font-family: 'Segoe UI Emoji','Apple Color Emoji','DM Mono',monospace;
+}
+/* Emoji-specific elements: force larger size so they render clearly */
+.nav-icon  { font-size: 20px; line-height: 1; }
+.empty-icon{ font-size: 44px; line-height: 1.2; }
+
 @media(max-width:800px){
   .pos-grid{grid-template-columns:1fr;height:auto}
   .form-grid{grid-template-columns:1fr}
@@ -229,6 +256,19 @@ code{color:var(--green);font-family:var(--mono)}
   #sidebar .sb-logo{padding:14px 10px;display:flex;justify-content:space-between;align-items:center}
   #sidebar .user-info{justify-content:center}
 }
+
+/* ── Emoji rendering fix for Windows 7 / IE / older Chromium ── */
+.nav-icon, .empty-icon, .badge, .toast {
+  font-family: 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji',
+               'Noto Color Emoji', 'Android Emoji', 'Outfit', sans-serif;
+  font-variant-emoji: emoji;
+}
+/* Force color emoji on Windows systems */
+@supports (font-variant-emoji: emoji) {
+  * { font-variant-emoji: normal; }
+  .nav-icon, .empty-icon { font-variant-emoji: emoji; }
+}
+
 </style>
 </head>
 <body>
@@ -251,23 +291,30 @@ async function api(method, path, body) {
     method, headers: { 'Content-Type': 'application/json', ...(State.token ? { 'Authorization': 'Bearer ' + State.token } : {}) }
   };
   if (body) opts.body = JSON.stringify(body);
+  // Map paths to Vercel serverless functions
+  // Route to correct Vercel serverless function filenames
   let url = '/api' + path;
-  if (path.startsWith('/auth/login')) url = '/api/login';
-  else if (path.match(/^\/products\/lookup\//)) url = '/api/products?lookup=' + path.split('/products/lookup/')[1];
-  else if (path.match(/^\/products\/\d+\/adjust-stock/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?action=adjust-stock&id='+pid; }
-  else if (path.match(/^\/products\/\d+/)) { var pid=path.match(/\/products\/(\d+)/)[1]; url='/api/products?id='+pid; }
+  if (path === '/auth/login' || path.startsWith('/auth/login')) url = '/api/login';
+  else if (path.match(/^\/products\/lookup\//)) url = '/api/product?lookup=' + encodeURIComponent(path.split('/products/lookup/')[1]);
+  else if (path.match(/^\/products\/\d+\/adjust-stock/)) url = '/api/product?action=adjust-stock&id=' + path.match(/\/products\/(\d+)/)[1];
+  else if (path.match(/^\/products\/\d+/)) url = '/api/product?id=' + path.match(/\/products\/(\d+)/)[1];
+  else if (path.startsWith('/products')) url = '/api/product' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
   else if (path.match(/^\/sales\/\d+\/receipt/)) url = '/api/receipt?id=' + path.match(/\/sales\/(\d+)/)[1];
-  else if (path.match(/^\/sales\/\d+/)) url = '/api/sales?id=' + path.match(/\d+/)[0];
-  else if (path.match(/^\/users\/\d+/)) url = '/api/users?id=' + path.match(/\d+/)[0];
-  else if (path.startsWith('/reports/dashboard')) url = '/api/dashboard';
-  else if (path.startsWith('/reports/')) url = '/api/dashboard';
-  else if (path.startsWith('/customers/lookup/')) url = '/api/customers?phone=' + path.split('/customers/lookup/')[1];
-  else if (path.startsWith('/discounts/validate')) url = '/api/discounts' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
-  else if (path.match(/^\/discounts\/\d+/)) url = '/api/discounts?id=' + path.match(/\d+/)[0];
-  else if (path.startsWith('/categories')) url = '/api/data?type=categories';
-  else if (path.startsWith('/suppliers')) url = '/api/data?type=suppliers';
-  else if (path.startsWith('/stock-movements')) url = '/api/products';
-  else if (path.startsWith('/purchase-orders')) url = '/api/dashboard';
+  else if (path.match(/^\/sales\/\d+/)) url = '/api/sales?id=' + path.match(/\/sales\/(\d+)/)[1];
+  else if (path.startsWith('/sales')) url = '/api/sales' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.match(/^\/users\/\d+/)) url = '/api/users?id=' + path.match(/\/users\/(\d+)/)[1];
+  else if (path.match(/^\/users\/\d+/)) url = '/api/users?id=' + path.match(/\/users\/(\d+)/)[1];
+  else if (path.startsWith('/users')) url = '/api/users' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.startsWith('/reports/dashboard') || path.startsWith('/reports/')) url = '/api/dashboard';
+  else if (path.startsWith('/customers/lookup/')) url = '/api/customers?phone=' + encodeURIComponent(path.split('/customers/lookup/')[1]);
+  else if (path.startsWith('/customers')) url = '/api/customers' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.startsWith('/discounts/validate')) url = '/api/discount?code=' + encodeURIComponent(new URLSearchParams(path.includes('?')?path.substring(path.indexOf('?')+1):'').get('code')||'');
+  else if (path.match(/^\/discounts\/\d+/)) url = '/api/discount?id=' + path.match(/\d+/)[0];
+  else if (path.startsWith('/discounts')) url = '/api/discount' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.startsWith('/categories')) url = '/api/categories' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.startsWith('/suppliers')) url = '/api/suppliers' + (path.includes('?') ? path.substring(path.indexOf('?')) : '');
+  else if (path.match(/^\/purchase-orders\/\d+\/receive/)) url = '/api/dashboard?type=receive-po&id=' + path.match(/\/purchase-orders\/(\d+)/)[1];
+  else if (path.startsWith('/purchase-orders')) url = '/api/dashboard?type=purchase-orders';
   else if (path.startsWith('/admin/')) url = '/api/dashboard';
   const res = await fetch(url, opts);
   if (res.status === 401) { logout(); throw new Error('Unauthorized'); }
@@ -334,7 +381,7 @@ function renderLogin() {
         <div class="field"><label>Username</label><input class="inp" id="lu" placeholder="Enter username" autocomplete="username"/></div>
         <div class="field"><label>Password</label><input class="inp" id="lp" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
         <button class="btn btn-primary btn-full" id="login-btn" style="margin-top:6px">Sign In →</button>
-
+        
       </div>
     </div>`;
   const doLogin = async () => {
@@ -466,7 +513,15 @@ async function pageDashboard() {
   const c = el('page-content');
   try {
     const [dash, chart] = await Promise.all([GET('/reports/dashboard'), GET('/reports/sales-by-day').catch(()=>[])]);
-    const { todaySales, weekSales, monthSales, totalProducts, lowStock, outOfStock, topProducts, recentSales, lowStockItems } = dash;
+    const todaySales = dash.todaySales || {revenue:0,count:0};
+    const weekSales = dash.weekSales || {revenue:0,count:0};
+    const monthSales = dash.monthSales || {revenue:0};
+    const totalProducts = dash.totalProducts || 0;
+    const lowStock = dash.lowStock || 0;
+    const outOfStock = dash.outOfStock || 0;
+    const topProducts = dash.topProducts || [];
+    const recentSales = dash.recentSales || [];
+    const lowStockItems = dash.lowStockItems || [];
 
     let chartHTML = '';
     if (chart.length > 0) {
@@ -483,7 +538,7 @@ async function pageDashboard() {
       </div>`;
     }
 
-    const lowAlerts = lowStockItems.slice(0,5).map(i=>`<div class="alert-card${i.stock===0?' crit':''}"><div style="font-weight:700">${esc(i.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:3px">Code: <span class="tag">${esc(i.code)}</span> &nbsp;·&nbsp; <strong style="color:${i.stock===0?'var(--red)':'var(--amber)}'}">${i.stock}</strong> / ${i.low_stock_threshold} units</div></div>`).join('');
+    const lowAlerts = (lowStockItems||[]).slice(0,5).map(i=>`<div class="alert-card${i.stock===0?' crit':''}"><div style="font-weight:700">${esc(i.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:3px">Code: <span class="tag">${esc(i.code)}</span> &nbsp;·&nbsp; <strong style="color:${i.stock===0?'var(--red)':'var(--amber)}'}">${i.stock}</strong> / ${i.low_stock_threshold} units</div></div>`).join('');
 
     c.innerHTML = `
       <div class="page-header">
@@ -639,15 +694,23 @@ function pagePOS() {
     if (!code) return;
     try {
       const p = await GET('/products/lookup/' + encodeURIComponent(code));
+      const _price = parseFloat(p.price) || 0;
+      const _stock = parseInt(p.stock) || 0;
+      const _thresh = parseInt(p.low_stock_threshold) || 10;
+      const _cat = p.category_name || '';
+      const _pSafe = {...p, price:_price, stock:_stock, low_stock_threshold:_thresh};
       scanResult.innerHTML = `<div class="result-card">
-        <div><div class="r-name">${esc(p.name)}</div><div class="r-meta"><span class="tag">${esc(p.code)}</span> &nbsp;·&nbsp; ${esc(p.category_name||'')} &nbsp;·&nbsp; <span class="badge ${p.stock<=p.low_stock_threshold?'badge-amber':'badge-green'}">${p.stock} in stock</span></div></div>
-        <div style="text-align:right"><div class="r-price">${fmt(p.price)}</div><button class="btn btn-primary" style="margin-top:8px" onclick="posAdd(${JSON.stringify(p).replace(/"/g,'&quot;')})">+ Add to Cart</button></div>
+        <div><div class="r-name">${esc(p.name)}</div><div class="r-meta"><span class="tag">${esc(p.code)}</span>${_cat?' &nbsp;·&nbsp; '+esc(_cat):''} &nbsp;·&nbsp; <span class="badge ${_stock<=_thresh?'badge-amber':'badge-green'}">${_stock} in stock</span></div></div>
+        <div style="text-align:right"><div class="r-price">${fmt(_price)}</div><button class="btn btn-primary" style="margin-top:8px" onclick="posAdd(${JSON.stringify(_pSafe).replace(/"/g,'&quot;')})">+ Add to Cart</button></div>
       </div>`;
       scanInp.value = '';
     } catch { scanResult.innerHTML = `<div class="result-notfound">✕ No product found for code "<strong>${esc(code)}</strong>"</div>`; scanInp.value = ''; }
   }
 
   window.posAdd = (p) => {
+    p.price = parseFloat(p.price) || 0;
+    p.stock = parseInt(p.stock) || 0;
+    p.low_stock_threshold = parseInt(p.low_stock_threshold) || 10;
     const ex = cart.find(c=>c.id===p.id);
     if (ex) { if(ex.qty >= p.stock) { toast('Only '+p.stock+' in stock','warn'); return; } ex.qty++; }
     else { if(p.stock<1){toast('Out of stock','err');return;} cart.push({...p,qty:1}); }
@@ -678,7 +741,7 @@ function pagePOS() {
     if (!code) return;
     const sub = cart.reduce((a,c)=>a+c.price*c.qty,0);
     try {
-      const data = await POST('/discounts/validate', { code, subtotal: sub });
+      const data = await GET('/discounts?code=' + encodeURIComponent(code) + '&subtotal=' + sub);
       promoApplied = data;
       el('promo-msg').textContent = '✅ ' + data.discount.code + ' — ' + fmt(data.amount) + ' off';
       toast('Promo applied!');
@@ -908,6 +971,7 @@ function openProductModal(prod, categories, suppliers) {
   ]);
   m.querySelector('.modal').classList.add('modal-lg');
 
+  // Barcode scan button — focuses input and waits for scanner
   const scanBtn = m.querySelector('#scan-barcode-btn');
   const barcodeInp = m.querySelector('#p-barcode');
   const hint = m.querySelector('#barcode-hint');
@@ -1090,7 +1154,14 @@ async function pageSuppliers() {
 // ── PURCHASE ORDERS ────────────────────────────────────────────────────────────
 async function pagePurchaseOrders() {
   async function render() {
-    const [orders, suppliers, products] = await Promise.all([GET('/purchase-orders'), GET('/suppliers'), GET('/products')]);
+    let orders = [], suppliers = [], products = [];
+    try {
+      [orders, suppliers, products] = await Promise.all([
+        GET('/purchase-orders').catch(()=>[]),
+        GET('/suppliers').catch(()=>[]),
+        GET('/products').catch(()=>[])
+      ]);
+    } catch(e) { orders=[]; suppliers=[]; products=[]; }
     const c = el('page-content');
     c.innerHTML=`
       <div class="page-header"><div><div class="page-title">Purchase Orders</div><div class="page-sub">Stock restocking from suppliers</div></div>
@@ -1106,7 +1177,7 @@ async function pagePurchaseOrders() {
           <td>${o.status==='pending'?`<button class="btn btn-primary btn-sm" onclick="receivePO(${o.id})">✅ Receive</button>`:''}</td></tr>`).join('')}
         </tbody></table></div></div></div>`;
     el('add-po-btn').onclick=()=>openPOModal(suppliers,products);
-    window.receivePO=async(id)=>{if(!confirm('Mark as received? This will update stock.'))return;try{await POST('/purchase-orders/'+id+'/receive');toast('Stock updated!');render();}catch(e){toast(e.message,'err');}};
+    window.receivePO=async(id)=>{if(!confirm('Mark as received? This will update stock.'))return;try{await POST('/purchase-orders/'+id+'/receive');toast('Stock updated!');render();}catch(e){toast(e.message||'Failed to receive order','err');}};
   }
   render();
 }
@@ -1181,6 +1252,7 @@ async function pageUsers() {
         </div>
       </div>`;
 
+    // Add Staff
     el('add-user-btn').onclick=()=>{
       const form=document.createElement('div');
       form.innerHTML=`<div class="field"><label>Full Name *</label><input class="inp" id="un-name" placeholder="e.g. John Doe"/></div><div class="form-grid"><div class="field"><label>Username *</label><input class="inp" id="un-user" placeholder="letters, numbers, _"/></div><div class="field"><label>Role</label><select class="sel" id="un-role"><option value="cashier">Cashier</option><option value="manager">Manager</option><option value="admin">Admin</option></select></div></div><div class="field"><label>Password (min 8 chars)</label><input class="inp" type="password" id="un-pass" placeholder="Minimum 8 characters"/></div>`;
@@ -1192,6 +1264,7 @@ async function pageUsers() {
       }}]);
     };
 
+    // Monthly Report
     el('report-btn').onclick=()=>{
       const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
       const years=[2024,2025,2026,2027];
@@ -1252,24 +1325,22 @@ if (State.user && State.token) {
   renderLogin();
 }
 
-// ── RECEIPT PRINTING — Optimised for 80mm thermal (72.1mm printable width) ────
+// ── RECEIPT PRINTING ─────────────────────────────────────────────────────────
 async function printReceipt(saleId) {
   try {
     const sale = await GET('/sales/' + saleId + '/receipt');
-    const fmtR = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const fmt = (n) => '\u20a6' + Number(n).toLocaleString('en-NG', {minimumFractionDigits:2, maximumFractionDigits:2});
     const d = new Date(sale.created_at);
-    const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit', minute:'2-digit'});
+    const dateStr = d.toLocaleDateString('en-NG') + ' ' + d.toLocaleTimeString('en-NG', {hour:'2-digit',minute:'2-digit'});
 
-    // Build item rows — truncate long names so they don't wrap badly on 72mm paper
-    const itemRows = (sale.items || []).map(i => {
-      const name = String(i.product_name || '').substring(0, 22); // keep within 72mm
-      return `<tr>
-        <td style="word-break:break-word;max-width:105px">${name}</td>
-        <td style="text-align:center;white-space:nowrap">${i.quantity}</td>
-        <td style="text-align:right;white-space:nowrap">${fmtR(i.unit_price)}</td>
-        <td style="text-align:right;white-space:nowrap">${fmtR(i.subtotal)}</td>
-      </tr>`;
-    }).join('');
+    const itemRows = (sale.items || []).map(i =>
+      `<tr>
+        <td>${i.product_name}</td>
+        <td style="text-align:center">${i.quantity}</td>
+        <td style="text-align:right">${fmt(i.unit_price)}</td>
+        <td style="text-align:right">${fmt(i.subtotal)}</td>
+      </tr>`
+    ).join('');
 
     const receiptHTML = `<!DOCTYPE html>
 <html>
@@ -1277,190 +1348,72 @@ async function printReceipt(saleId) {
 <meta charset="UTF-8"/>
 <title>Receipt ${sale.ref}</title>
 <style>
-  /* ── Reset ── */
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-  /* ── Page: 80mm wide, auto height so thermal cutter fires at exact content end ── */
-  @page {
-    size: 80mm auto;
-    margin: 3mm 4mm 6mm 4mm;  /* keeps content inside 72.1mm printable width */
-  }
-
-  /* ── Base body — used both for screen preview and print ── */
-  body {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 11px;
-    line-height: 1.45;
-    color: #000;
-    background: #fff;
-    /* screen: center receipt in grey area */
-    background-color: #e8e8e8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 0 24px;
-    gap: 14px;
-  }
-
-  /* ── Screen-only preview elements ── */
-  .preview-label {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    color: #555;
-    background: #fff9db;
-    border: 1px solid #e6c800;
-    border-radius: 4px;
-    padding: 5px 14px;
-  }
-  .receipt-box {
-    background: #fff;
-    width: 72mm;
-    padding: 5px 0 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.25);
-  }
-  .print-btn {
-    font-family: Arial, sans-serif;
-    padding: 9px 26px;
-    font-size: 13px;
-    cursor: pointer;
-    background: #111;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    letter-spacing: .3px;
-  }
-
-  /* ── Typography ── */
-  .center  { text-align: center; }
-  .bold    { font-weight: bold; }
-  .big     { font-size: 13px; font-weight: bold; letter-spacing: .5px; }
-  .small   { font-size: 9px; }
-  .divider { border: none; border-top: 1px dashed #555; margin: 4px 0; }
-  .spacer  { height: 5px; }
-
-  /* ── Items table ── */
-  table            { width: 100%; border-collapse: collapse; table-layout: fixed; }
-  th               { font-size: 9px; font-weight: bold; border-bottom: 1px solid #000;
-                     padding: 2px 1px; text-transform: uppercase; }
-  td               { font-size: 10px; padding: 2px 1px; vertical-align: top; }
-  .col-item        { width: 42%; }
-  .col-qty         { width: 10%; }
-  .col-price       { width: 23%; }
-  .col-total       { width: 25%; }
-
-  /* ── Totals table ── */
-  .totals-table td { font-size: 10px; padding: 1px 1px; }
-  .grand td        { font-size: 12px; font-weight: bold;
-                     border-top: 1px solid #000; padding-top: 3px; }
-
-  /* ── Footer ── */
-  .footer { font-size: 9px; text-align: center; margin-top: 5px; }
-
-  /* ── PRINT: strip screen chrome, let @page control everything ── */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Courier New', monospace; font-size: 12px; width: 80mm; margin: 0 auto; padding: 8px; color: #000; }
+  .center { text-align: center; }
+  .bold { font-weight: bold; }
+  .big { font-size: 16px; }
+  .divider { border-top: 1px dashed #000; margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-weight: bold; border-bottom: 1px solid #000; padding: 2px 0; font-size: 11px; }
+  td { padding: 2px 0; font-size: 11px; }
+  .totals td { padding: 1px 0; }
+  .grand-total td { font-weight: bold; font-size: 13px; border-top: 1px solid #000; padding-top: 4px; }
   @media print {
-    html, body {
-      background: #fff !important;
-      display: block !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      width: auto !important;
-    }
-    .preview-label, .print-btn { display: none !important; }
-    .receipt-box {
-      box-shadow: none !important;
-      width: auto !important;
-      padding: 0 !important;
-    }
+    body { width: 80mm; }
+    button { display: none; }
   }
 </style>
 </head>
 <body>
-
-<div class="preview-label">🖨️ 80mm Thermal Preview — click Print below</div>
-
-  <div class="receipt-box">
-
-    <!-- HEADER -->
-    <div class="center bold big">C.A. CAR ACCESSORIES</div>
-    <div class="center small">Quality Auto Parts &amp; Accessories</div>
-    <div class="center small">Tel: 07061909275 | 09049061562</div>
-    <hr class="divider"/>
-
-    <!-- META -->
-    <div>Receipt: <strong>${sale.ref}</strong></div>
-    <div>Date: ${dateStr}</div>
-    <div>Cashier: ${sale.cashier_name || 'Staff'}</div>
-    ${sale.customer_name ? `<div>Customer: ${sale.customer_name}</div>` : ''}
-    <hr class="divider"/>
-
-    <!-- ITEMS -->
-    <table>
-      <colgroup>
-        <col class="col-item"/>
-        <col class="col-qty"/>
-        <col class="col-price"/>
-        <col class="col-total"/>
-      </colgroup>
-      <thead>
-        <tr>
-          <th style="text-align:left">Item</th>
-          <th style="text-align:center">Qty</th>
-          <th style="text-align:right">Price</th>
-          <th style="text-align:right">Total</th>
-        </tr>
-      </thead>
-      <tbody>${itemRows}</tbody>
-    </table>
-    <hr class="divider"/>
-
-    <!-- TOTALS -->
-    <table class="totals-table">
-      <colgroup><col style="width:60%"/><col style="width:40%"/></colgroup>
-      <tbody>
-        <tr><td>Subtotal</td><td style="text-align:right">${fmtR(sale.subtotal)}</td></tr>
-        ${sale.discount_amount > 0
-          ? `<tr><td>Discount</td><td style="text-align:right">- ${fmtR(sale.discount_amount)}</td></tr>`
-          : ''}
-        <tr class="grand">
-          <td>TOTAL</td>
-          <td style="text-align:right">${fmtR(sale.total)}</td>
-        </tr>
-        <tr>
-          <td>Paid (${sale.payment_method})</td>
-          <td style="text-align:right">${fmtR(sale.amount_paid)}</td>
-        </tr>
-        <tr>
-          <td>Change</td>
-          <td style="text-align:right">${fmtR(sale.change_given)}</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr class="divider"/>
-
-    <!-- LOYALTY & FOOTER -->
-
-    <div class="footer">Thank you for your patronage!<br/>Powered by Greener P Tech<br/>08147474278</div>
-    <div class="spacer"></div>
-
-  </div><!-- /.receipt-box -->
-
-  <button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
-
-<script>
-  // Auto-trigger print dialog after a short delay
-  setTimeout(() => window.print(), 800);
-<\/script>
+<div class="center">
+  <div class="bold big">C.A. CAR ACCESSORIES</div>
+  <div>Quality Auto Parts & Accessories</div>
+  <div>Tel: 07061909275</div>
+</div>
+<div class="divider"></div>
+<div>Receipt: <strong>${sale.ref}</strong></div>
+<div>Date: ${dateStr}</div>
+<div>Cashier: ${sale.cashier_name || 'Staff'}</div>
+${sale.customer_name ? '<div>Customer: ' + sale.customer_name + '</div>' : ''}
+<div class="divider"></div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Item</th>
+      <th style="text-align:center">Qty</th>
+      <th style="text-align:right">Price</th>
+      <th style="text-align:right">Total</th>
+    </tr>
+  </thead>
+  <tbody>${itemRows}</tbody>
+</table>
+<div class="divider"></div>
+<table class="totals">
+  <tr><td>Subtotal</td><td style="text-align:right">${fmt(sale.subtotal)}</td></tr>
+  ${sale.discount_amount > 0 ? '<tr><td>Discount</td><td style="text-align:right">-' + fmt(sale.discount_amount) + '</td></tr>' : ''}
+  <tr class="grand-total"><td>TOTAL</td><td style="text-align:right">${fmt(sale.total)}</td></tr>
+  <tr><td>Amount Paid (${sale.payment_method})</td><td style="text-align:right">${fmt(sale.amount_paid)}</td></tr>
+  <tr><td>Change</td><td style="text-align:right">${fmt(sale.change_given)}</td></tr>
+</table>
+<div class="divider"></div>
+${sale.loyalty_points_earned > 0 ? '<div class="center">Points Earned: ' + sale.loyalty_points_earned + '</div>' : ''}
+<div class="center" style="margin-top:8px">Thank you for your patronage!</div>
+<div class="center">Powered by Greener P Tech</div>
+<br/>
+<div class="center"><button onclick="window.print()" style="padding:8px 20px;font-size:14px;cursor:pointer;background:#000;color:#fff;border:none;border-radius:4px">🖨️ Print</button></div>
+<script>setTimeout(()=>window.print(), 500);<\/script>
 </body>
 </html>`;
 
-    const w = window.open('', '_blank', 'width=420,height=650,scrollbars=yes');
-    if (!w) { toast('Pop-up blocked — please allow pop-ups for this site', 'warn'); return; }
+    const w = window.open('', '_blank', 'width=400,height=600');
     w.document.write(receiptHTML);
     w.document.close();
   } catch(e) {
     toast('Could not load receipt: ' + e.message, 'err');
   }
 }
+
 </script>
 </body>
 </html>
